@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 	return (
 		<NavigationContainer>
-			<SafeAreaProvider style={tw`py-10`}>
+			<SafeAreaProvider>
 				<Stack.Navigator>
 					<Stack.Screen
 						name='Login'
