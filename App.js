@@ -6,7 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ScreenStack } from 'react-native-screens';
 import tw from 'tailwind-react-native-classnames';
 import LoginScreen from './screens/LoginScreen';
-
+import { Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
+const { height } = Dimensions.get('screen');
 const Stack = createNativeStackNavigator();
 
 export default function App() {
