@@ -15,8 +15,32 @@ import ButtonGradient from '../components/ButtonGradient';
 import GoogleButton from '../components/GoogleButton';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
+import * as Google from 'expo-google-app-auth';
+import { Formik } from 'formik';
 
 const { width, height } = Dimensions.get('screen');
+
+const GOOGLE_ID =
+	'273398373665-1ia00d0ggsr7aqijhevlijpkmttc3tq7.apps.googleusercontent.com';
+
+async function signInWithGoogleAsync() {
+	try {
+		const result = await Google.logInAsync({
+			androidClientId: GOOGLE_ID,
+			//iosClientId: YOUR_CLIENT_ID_HERE,
+			scopes: ['profile', 'email'],
+		});
+
+		if (result.type === 'success') {
+			navigation.navigate('Home', {});
+			console.log('RESULT', result);
+		} else {
+			console.log('NO SUCCESS');
+		}
+	} catch (e) {
+		console.log(e);
+	}
+}
 
 function SvgTop() {
 	return (
@@ -113,19 +137,60 @@ const LoginScreen = () => {
 							Ingresa con tu cuenta
 						</Text>
 						{/* <Text style={styles.textEmail}>Email</Text> */}
-						<TextInput
-							style={styles.textInput}
-							name='email'
-							placeholder='Ingresa tu email'
+						<Formik
+							initialValues={{ email: '', password: '' }}
+							validate={(values) => {
+								const errors = {};
+								if (!values.email) {
+									errors.email = 'Required';
+								} else if (
+									!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+										values.email,
+									)
+								) {
+									errors.email = 'Invalid email address';
+								}
+								return errors;
+							}}
+							onSubmit={(values, { setSubmitting }) => {
+								setTimeout(() => {
+									alert(JSON.stringify(values, null, 2));
+									setSubmitting(false);
+								}, 400);
+							}}
+						>
+							{({
+								values,
+								errors,
+								touched,
+								handleChange,
+								handleBlur,
+								handleSubmit,
+								isSubmitting,
+								/* and other goodies */
+							}) => (
+								<form onSubmit={handleSubmit}>
+									<TextInput
+										style={styles.textInput}
+										name='email'
+										placeholder='Ingresa tu email'
+									/>
+									<TextInput
+										style={styles.textInput}
+										name='password'
+										placeholder='Ingresa tu contraseña'
+									/>
+									<ButtonGradient
+										navi={navi}
+										handleSubmit={handleSubmit}
+									/>
+								</form>
+							)}
+						</Formik>
+						<GoogleButton
+							signInWithGoogleAsync={signInWithGoogleAsync}
+							navi={navi}
 						/>
-						{/* <Text style={styles.textPassword}>Contraseña</Text> */}
-						<TextInput
-							style={styles.textInput}
-							name='password'
-							placeholder='Ingresa tu contraseña'
-						/>
-						<ButtonGradient navi={navi} />
-						<GoogleButton navi={navi} />
 					</Animated.View>
 				</View>
 			</TouchableWithoutFeedback>

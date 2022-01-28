@@ -1,42 +1,41 @@
-import React from "react";
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function ButtonGradient({ navi }) {
-    return (
-        <TouchableOpacity style={styles.container} onPress={() => navi()}>
-            <LinearGradient
-                // Button Linear Gradient
-                colors={['#FFB677', '#FF3CBD']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.button}
-            >
-                <Text style={styles.text}>INGRESAR</Text>
-            </LinearGradient>
-        </TouchableOpacity>
-    );
+export default function ButtonGradient({ navi, handleSubmit }) {
+	return (
+		<TouchableOpacity style={styles.container} onPress={handleSubmit}>
+			<LinearGradient
+				// Button Linear Gradient
+				colors={['#FFB677', '#FF3CBD']}
+				start={{ x: 0, y: 0 }}
+				end={{ x: 1, y: 1 }}
+				style={styles.button}
+			>
+				<Text style={styles.text}>INGRESAR</Text>
+			</LinearGradient>
+		</TouchableOpacity>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        width: 200,
-        marginTop: 30,
-    },
+	container: {
+		alignItems: 'center',
+		width: 200,
+		marginTop: 30,
+	},
 
-    text: {
-        fontSize: 14,
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    button: {
-        width: '80%',
-        height: 50,
-        borderRadius: 25,
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
+	text: {
+		fontSize: 14,
+		color: '#fff',
+		fontWeight: 'bold',
+	},
+	button: {
+		width: '80%',
+		height: 50,
+		borderRadius: 25,
+		padding: 10,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 });

@@ -3,10 +3,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon } from 'react-native-elements';
 
-export default function GoogleButton() {
+export default function GoogleButton({ signInWithGoogleAsync }) {
 	return (
 		<View>
-			<TouchableOpacity style={styles.container}>
+			<TouchableOpacity
+				style={styles.container}
+				onPress={() => signInWithGoogleAsync()}
+			>
 				<LinearGradient
 					// Button Linear Gradient
 					colors={['#FFB677', '#FF3CBD']}
