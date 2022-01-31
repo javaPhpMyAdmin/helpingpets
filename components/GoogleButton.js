@@ -2,13 +2,43 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+import * as Google from 'expo-google-app-auth';
 
-export default function GoogleButton({ signInWithGoogleAsync }) {
+const GOOGLE_ID_ANDROID =
+	'273398373665-1ia00d0ggsr7aqijhevlijpkmttc3tq7.apps.googleusercontent.com';
+
+const GOOGLE_ID_IOS = '273398373665-3bkiens7o5ciuq3b434tcefbhchreiec.apps.googleusercontent.com'
+
+
+export default function GoogleButton() {
+	const navigation = useNavigation()
+
+	const signInWithGoogleAsync = async () => {
+
+		try {
+			const result = await Google.logInAsync({
+				androidClientId: GOOGLE_ID_ANDROID,
+				iosClientId: GOOGLE_ID_IOS,
+				scopes: ['profile', 'email'],
+			});
+
+			if (result.type === 'success') {
+				navigation.navigate('Home',);
+				console.log('RESULT', result);
+			} else {
+				console.log('NO SUCCESS');
+			}
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
 	return (
 		<View>
 			<TouchableOpacity
 				style={styles.container}
-				onPress={() => signInWithGoogleAsync()}
+				onPress={signInWithGoogleAsync}
 			>
 				<LinearGradient
 					// Button Linear Gradient
@@ -18,15 +48,15 @@ export default function GoogleButton({ signInWithGoogleAsync }) {
 					style={styles.button}
 				>
 					<View style={styles.icon}>
-						<View style={{ paddingRight: 10, paddingBottom: 2 }}>
+						<View style={{ paddingRight: 10, paddingTop: 4 }}>
 							<Icon
-								name='google-plus'
+								name='google'
 								color='white'
 								type='font-awesome'
 							/>
 						</View>
-						<View>
-							<Text style={styles.text}>INGRESAR CON GOOGLE</Text>
+						<View style={{ paddingTop: 4 }}>
+							<Text style={styles.text}>GOOGLE</Text>
 						</View>
 					</View>
 				</LinearGradient>
@@ -37,26 +67,30 @@ export default function GoogleButton({ signInWithGoogleAsync }) {
 
 const styles = StyleSheet.create({
 	container: {
+		shadowColor: 'black',
+		shadowRadius: 4,
+		shadowOffset: { width: 2, height: 5 },
+		shadowOpacity: 0.3,
 		alignItems: 'center',
 		width: 350,
 		marginTop: 30,
 	},
 
 	text: {
-		fontSize: 14,
+		fontSize: 19,
 		color: '#fff',
 		fontWeight: 'bold',
 	},
 	button: {
-		width: '80%',
+		width: '50%',
 		height: 50,
 		borderRadius: 25,
-		padding: 10,
+		paddingTop: 5,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	icon: {
 		flexDirection: 'row',
-		paddingBottom: 1,
+		paddingBottom: 4,
 	},
 });

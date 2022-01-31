@@ -13,8 +13,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 	return (
 		<NavigationContainer>
-			<SafeAreaProvider>
-				<Stack.Navigator>
+			<SafeAreaProvider style={{ paddingTop: 40 }}>
+				<Stack.Navigator initialRouteName='Login'>
 					<Stack.Screen
 						name='Login'
 						component={LoginScreen}
