@@ -4,20 +4,23 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ScreenStack } from 'react-native-screens';
-import tw from 'tailwind-react-native-classnames';
 import LoginScreen from './screens/LoginScreen';
-import { Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
-const { height } = Dimensions.get('screen');
 const Stack = createNativeStackNavigator();
+import Camera from './components/Camera'
 
 export default function App() {
 	return (
 		<NavigationContainer>
 			<SafeAreaProvider style={{ paddingTop: 40 }}>
-				<Stack.Navigator initialRouteName='Login'>
+				<Stack.Navigator initialRouteName='Camera'>
 					<Stack.Screen
 						name='Login'
 						component={LoginScreen}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name='Camera'
+						component={Camera}
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
