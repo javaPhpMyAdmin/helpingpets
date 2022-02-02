@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function ButtonGradient({ handleSubmit, isValid }) {
+export default function ButtonGradient({ handleSubmit, isValid, titleButton }) {
 	return (
 		<TouchableOpacity style={styles.container} onPress={handleSubmit} disabled={!isValid}>
 			{
@@ -12,9 +12,9 @@ export default function ButtonGradient({ handleSubmit, isValid }) {
 						colors={['gray', 'black']}
 						start={{ x: 0, y: 0 }}
 						end={{ x: 1, y: 1 }}
-						style={styles.button}
+						style={[styles.button]}
 					>
-						<Text style={styles.text}>INGRESAR</Text>
+						<Text style={styles.text}>{titleButton}</Text>
 					</LinearGradient>
 				) :
 					(
@@ -36,10 +36,11 @@ export default function ButtonGradient({ handleSubmit, isValid }) {
 
 const styles = StyleSheet.create({
 	container: {
-		shadowColor: 'black',
-		shadowRadius: 4,
-		shadowOffset: { width: 2, height: 5 },
-		shadowOpacity: 0.3,
+		shadowColor: 'gray',
+		shadowRadius: 10,
+		shadowOffset: { width: 6, height: 7 },
+		elevation: 25,
+		shadowOpacity: 0.5,
 		alignItems: 'center',
 		width: 200,
 		marginTop: 30,

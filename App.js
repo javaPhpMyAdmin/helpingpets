@@ -7,6 +7,8 @@ import { ScreenStack } from 'react-native-screens';
 import LoginScreen from './screens/LoginScreen';
 const Stack = createNativeStackNavigator();
 import Camera from './components/Camera'
+import ImagePickerComponent from './components/ImagePicker';
+
 
 export default function App() {
 	return (
@@ -16,6 +18,11 @@ export default function App() {
 					<Stack.Screen
 						name='Login'
 						component={LoginScreen}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name='ImagePicker'
+						component={ImagePickerComponent}
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen

@@ -14,10 +14,7 @@ const SignInSchema = Yup.object().shape({
     password: Yup.string().required('Por favor ingrese su contraseña')
 })
 
-
-
 const FormLogin = () => {
-    const navigation = useNavigation()
     const [showPassword, setShowPassword] = useState(false);
     return (
         <Formik
@@ -153,6 +150,7 @@ const FormLogin = () => {
                             <ButtonGradient
                                 handleSubmit={handleSubmit}
                                 isValid={isValid}
+                                titleButton='INGRESAR'
                             />
                         </View>
                     </View>
