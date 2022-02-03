@@ -10,8 +10,7 @@ import ImagePickerComponent from './components/ImagePicker';
 import NewMarker from './components/NewMarker';
 import { Constants } from 'expo-camera';
 
-const heightStatusBar = Constants.StatusBarHeight
-
+const heightStatusBar = Constants.StatusBarHeight;
 
 export default function App() {
 	return (

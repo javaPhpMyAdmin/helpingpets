@@ -9,31 +9,27 @@ export default function ButtonGradient({ handleSubmit, isValid, titleButton }) {
 			onPress={handleSubmit}
 			disabled={!isValid}
 		>
-			{
-				!isValid ? (
-					<LinearGradient
-						// Button Linear Gradient
-						colors={['gray', 'black']}
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						style={[styles.button]}
-					>
-						<Text style={styles.text}>{titleButton}</Text>
-					</LinearGradient>
-				) :
-					(
-						<LinearGradient
-							// Button Linear Gradient
-							colors={['#FFB677', '#FF3CBD']}
-							start={{ x: 0, y: 0 }}
-							end={{ x: 1, y: 1 }}
-							style={styles.button}
-						>
-							<Text style={styles.text}>INGRESAR</Text>
-						</LinearGradient>
-
-					)
-			}
+			{!isValid ? (
+				<LinearGradient
+					// Button Linear Gradient
+					colors={['gray', 'black']}
+					start={{ x: 0, y: 0 }}
+					end={{ x: 1, y: 1 }}
+					style={[styles.button]}
+				>
+					<Text style={styles.text}>{titleButton}</Text>
+				</LinearGradient>
+			) : (
+				<LinearGradient
+					// Button Linear Gradient
+					colors={['#FFB677', '#FF3CBD']}
+					start={{ x: 0, y: 0 }}
+					end={{ x: 1, y: 1 }}
+					style={styles.button}
+				>
+					<Text style={styles.text}>INGRESAR</Text>
+				</LinearGradient>
+			)}
 		</TouchableOpacity>
 	);
 }
@@ -43,11 +39,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		width: 200,
 		marginTop: 30,
-		shadowColor: 'black',
-		shadowRadius: 10,
-		shadowOffset: { width: -16, height: -17 },
-		elevation: 20,
-		shadowOpacity: 1,
+		padding: 10,
 	},
 
 	text: {
@@ -62,5 +54,10 @@ const styles = StyleSheet.create({
 		padding: 10,
 		alignItems: 'center',
 		justifyContent: 'center',
+		shadowColor: '#0a0a0a',
+		shadowRadius: 3,
+		shadowOffset: { width: 7, height: 7 },
+		elevation: 5,
+		shadowOpacity: 1,
 	},
 });

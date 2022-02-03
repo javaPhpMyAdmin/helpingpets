@@ -8,14 +8,13 @@ import * as Google from 'expo-google-app-auth';
 const GOOGLE_ID_ANDROID =
 	'273398373665-1ia00d0ggsr7aqijhevlijpkmttc3tq7.apps.googleusercontent.com';
 
-const GOOGLE_ID_IOS = '273398373665-3bkiens7o5ciuq3b434tcefbhchreiec.apps.googleusercontent.com'
-
+const GOOGLE_ID_IOS =
+	'273398373665-3bkiens7o5ciuq3b434tcefbhchreiec.apps.googleusercontent.com';
 
 export default function GoogleButton() {
-	const navigation = useNavigation()
+	const navigation = useNavigation();
 
 	const signInWithGoogleAsync = async () => {
-
 		try {
 			const result = await Google.logInAsync({
 				androidClientId: GOOGLE_ID_ANDROID,
@@ -24,7 +23,7 @@ export default function GoogleButton() {
 			});
 
 			if (result.type === 'success') {
-				navigation.navigate('Home',);
+				navigation.navigate('Home');
 				console.log('RESULT', result);
 			} else {
 				console.log('NO SUCCESS');
@@ -32,10 +31,10 @@ export default function GoogleButton() {
 		} catch (e) {
 			console.log(e);
 		}
-	}
+	};
 
 	return (
-		<View>
+		<View style={{}}>
 			<TouchableOpacity
 				style={styles.container}
 				onPress={signInWithGoogleAsync}
@@ -67,10 +66,6 @@ export default function GoogleButton() {
 
 const styles = StyleSheet.create({
 	container: {
-		shadowColor: 'black',
-		shadowRadius: 4,
-		shadowOffset: { width: 2, height: 5 },
-		shadowOpacity: 0.3,
 		alignItems: 'center',
 		width: 350,
 		marginTop: 30,
@@ -88,6 +83,11 @@ const styles = StyleSheet.create({
 		paddingTop: 5,
 		alignItems: 'center',
 		justifyContent: 'center',
+		shadowColor: 'black',
+		shadowRadius: 3,
+		shadowOffset: { width: 7, height: 7 },
+		elevation: 5,
+		shadowOpacity: 1,
 	},
 	icon: {
 		flexDirection: 'row',

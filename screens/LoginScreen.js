@@ -8,7 +8,7 @@ import {
 	Keyboard,
 	StatusBar,
 	Image,
-	TouchableOpacity
+	TouchableOpacity,
 } from 'react-native';
 import { TouchableWithoutFeedback, Animated } from 'react-native';
 import React, { useEffect, useState } from 'react';
@@ -19,14 +19,19 @@ import { Icon } from 'react-native-elements';
 const { width, height } = Dimensions.get('screen');
 
 const LoginScreen = () => {
-
 	const [viewHeight] = useState(new Animated.ValueXY({ x: 0, y: 50 }));
 	const [opacityView] = useState(new Animated.Value(0));
 	const [logo] = useState(new Animated.ValueXY({ x: 170, y: 150 }));
 
 	useEffect(() => {
-		const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
-		const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
+		const keyboardDidShowListener = Keyboard.addListener(
+			'keyboardDidShow',
+			keyboardDidShow,
+		);
+		const keyboardDidHideListener = Keyboard.addListener(
+			'keyboardDidHide',
+			keyboardDidHide,
+		);
 
 		Animated.parallel([
 			Animated.spring(viewHeight.y, {
@@ -45,9 +50,9 @@ const LoginScreen = () => {
 		]).start();
 
 		return () => {
-			keyboardDidShowListener.remove()
-			keyboardDidHideListener.remove()
-		}
+			keyboardDidShowListener.remove();
+			keyboardDidHideListener.remove();
+		};
 	}, []);
 
 	const keyboardDidShow = () => {
@@ -56,16 +61,16 @@ const LoginScreen = () => {
 				toValue: 70,
 				duration: 100,
 				bounciness: 10,
-				useNativeDriver: false
+				useNativeDriver: false,
 			}),
 			Animated.spring(logo.y, {
 				toValue: 50,
 				duration: 100,
 				bounciness: 10,
-				useNativeDriver: false
+				useNativeDriver: false,
 			}),
 		]).start();
-	}
+	};
 
 	const keyboardDidHide = () => {
 		Animated.parallel([
@@ -84,7 +89,7 @@ const LoginScreen = () => {
 				bounciness: 10,
 			}),
 		]).start();
-	}
+	};
 
 	return (
 		<KeyboardAvoidingView
@@ -93,7 +98,10 @@ const LoginScreen = () => {
 			keyboardVerticalOffset={Platform.OS === 'ios' ? -154 : 0}
 		>
 			<StatusBar style='black' />
-			<TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+			<TouchableWithoutFeedback
+				style={{ flex: 1 }}
+				onPress={Keyboard.dismiss}
+			>
 				<View style={styles.mainContainer}>
 					{/* <Animated.View style={{ zIndex: 1, position: 'absolute', left: width / 2.99, bottom: (height / 5.40), top: logo.y }}>
 						<Animated.Image style={{ width: logo.x, height: logo.y, position: 'absolute', borderRadius: 100 }} source={require('../assets/patas.jpg')} />
@@ -107,7 +115,7 @@ const LoginScreen = () => {
 							{
 								transform: [{ translateY: viewHeight.y }],
 								opacity: opacityView,
-								paddingBottom: 60
+								paddingBottom: 60,
 							},
 						]}
 					>
@@ -116,15 +124,45 @@ const LoginScreen = () => {
 							Ingresa con tu cuenta
 						</Text>
 						<FormLogin />
-						<View style={{ flexDirection: 'column', paddingTop: 10, justifyContent: 'center', width: width, alignItems: 'center' }}>
+						<View
+							style={{
+								flexDirection: 'column',
+								paddingTop: 10,
+								justifyContent: 'center',
+								width: width,
+								alignItems: 'center',
+							}}
+						>
 							<View style={{ paddingRight: 20 }}>
-								<TouchableOpacity onPress={() => { }}>
-									<Text style={{ color: 'black', paddingTop: 10, paddingRight: 0 }}>Olvido su contraseña</Text>
+								<TouchableOpacity onPress={() => {}}>
+									<Text
+										style={{
+											color: 'black',
+											paddingTop: 10,
+											paddingRight: 0,
+										}}
+									>
+										Olvido su contraseña
+									</Text>
 								</TouchableOpacity>
 							</View>
 							<View>
-								<TouchableOpacity style={{ flexDirection: 'row', paddingRight: 10 }} onPress={() => { }}>
-									<Text style={{ color: 'black', paddingTop: 10, paddingRight: 7 }}>Crear una cuenta</Text>
+								<TouchableOpacity
+									style={{
+										flexDirection: 'row',
+										paddingRight: 10,
+									}}
+									onPress={() => {}}
+								>
+									<Text
+										style={{
+											color: 'black',
+											paddingTop: 10,
+											paddingRight: 7,
+										}}
+									>
+										Crear una cuenta
+									</Text>
 									<Icon
 										style={{ paddingTop: 12 }}
 										name='plus'
@@ -138,7 +176,7 @@ const LoginScreen = () => {
 					</Animated.View>
 				</View>
 			</TouchableWithoutFeedback>
-		</KeyboardAvoidingView >
+		</KeyboardAvoidingView>
 	);
 };
 
@@ -153,8 +191,8 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		shadowColor: 'black',
-		shadowRadius: 5,
-		shadowOffset: { width: -8, height: -5 },
+		shadowRadius: 15,
+		shadowOffset: { width: 0, height: -15 },
 		shadowOpacity: 1,
 		elevation: 10,
 		alignItems: 'center',
@@ -164,7 +202,6 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 40,
 		backgroundColor: '#f9f9f9',
 		paddingBottom: 20,
-
 	},
 	title: {
 		paddingTop: 20,
