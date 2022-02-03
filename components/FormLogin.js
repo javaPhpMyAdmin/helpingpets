@@ -100,7 +100,9 @@ const FormLogin = () => {
                         />
                         {
                             showPassword ? (
-                                <TouchableWithoutFeedback onPress={() => setShowPassword(!showPassword)}>
+                                <TouchableWithoutFeedback
+                                    onPress={() => setShowPassword(!showPassword)}
+                                >
                                     <Icon
                                         style={{ paddingBottom: 0, paddingRight: 5 }}
                                         name='eye'
@@ -110,7 +112,9 @@ const FormLogin = () => {
                                 </TouchableWithoutFeedback>
 
                             ) : (
-                                <TouchableWithoutFeedback onPress={() => setShowPassword(!showPassword)}>
+                                <TouchableWithoutFeedback
+                                    onPress={() => setShowPassword(!showPassword)}
+                                >
                                     <Icon
                                         style={{ paddingBottom: 0, paddingRight: 5 }}
                                         name='eye-slash'
@@ -174,11 +178,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 30,
         backgroundColor: '#fff',
-        shadowColor: 'gray',
-        shadowRadius: 10,
-        shadowOffset: { width: 6, height: 7 },
-        elevation: 25,
-        shadowOpacity: 0.5,
+        shadowColor: 'black',
+        shadowRadius: 5,
+        shadowOffset: { width: 5, height: 20 },
+        elevation: 10,
+        shadowOpacity: 0.9,
     },
 
     textError: {

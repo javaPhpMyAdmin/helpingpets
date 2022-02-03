@@ -153,9 +153,10 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		shadowColor: 'black',
-		shadowRadius: 10,
-		shadowOffset: { width: -8, height: -10 },
-		shadowOpacity: 0.5,
+		shadowRadius: 5,
+		shadowOffset: { width: -8, height: -5 },
+		shadowOpacity: 1,
+		elevation: 10,
 		alignItems: 'center',
 		justifyContent: 'center',
 		borderColor: 'blue',
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 40,
 		backgroundColor: '#f9f9f9',
 		paddingBottom: 20,
+
 	},
 	title: {
 		paddingTop: 20,

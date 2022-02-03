@@ -6,28 +6,26 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ScreenStack } from 'react-native-screens';
 import LoginScreen from './screens/LoginScreen';
 const Stack = createNativeStackNavigator();
-import Camera from './components/Camera'
 import ImagePickerComponent from './components/ImagePicker';
+import NewMarker from './components/NewMarker';
+import { Constants } from 'expo-camera';
+
+const heightStatusBar = Constants.StatusBarHeight
 
 
 export default function App() {
 	return (
 		<NavigationContainer>
-			<SafeAreaProvider style={{ paddingTop: 40 }}>
-				<Stack.Navigator initialRouteName='Camera'>
+			<SafeAreaProvider style={{ paddingTop: heightStatusBar }}>
+				<Stack.Navigator initialRouteName='NewMarker'>
 					<Stack.Screen
 						name='Login'
 						component={LoginScreen}
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
-						name='ImagePicker'
-						component={ImagePickerComponent}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
-						name='Camera'
-						component={Camera}
+						name='NewMarker'
+						component={NewMarker}
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen

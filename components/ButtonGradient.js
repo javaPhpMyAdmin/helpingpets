@@ -4,7 +4,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ButtonGradient({ handleSubmit, isValid, titleButton }) {
 	return (
-		<TouchableOpacity style={styles.container} onPress={handleSubmit} disabled={!isValid}>
+		<TouchableOpacity
+			style={styles.container}
+			onPress={handleSubmit}
+			disabled={!isValid}
+		>
 			{
 				!isValid ? (
 					<LinearGradient
@@ -36,14 +40,14 @@ export default function ButtonGradient({ handleSubmit, isValid, titleButton }) {
 
 const styles = StyleSheet.create({
 	container: {
-		shadowColor: 'gray',
-		shadowRadius: 10,
-		shadowOffset: { width: 6, height: 7 },
-		elevation: 25,
-		shadowOpacity: 0.5,
 		alignItems: 'center',
 		width: 200,
 		marginTop: 30,
+		shadowColor: 'black',
+		shadowRadius: 10,
+		shadowOffset: { width: -16, height: -17 },
+		elevation: 20,
+		shadowOpacity: 1,
 	},
 
 	text: {
