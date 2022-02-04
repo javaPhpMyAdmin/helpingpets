@@ -5,7 +5,6 @@ import {
 	View,
 	Image,
 	SafeAreaView,
-	Dimensions,
 	ScrollView,
 	TouchableOpacity,
 	KeyboardAvoidingView,
@@ -15,12 +14,15 @@ import FormNewMarker from './FormNewMarker';
 import CameraContainer from './Camera';
 import BoxPicture from './BoxPicture';
 import { Icon } from 'react-native-elements';
-const { width, height } = Dimensions.get('screen');
 
 export default function NewMarker() {
-	const [photo, setPhoto] = useState(null);
+	const [photo1, setPhoto1] = useState(null);
+	const [photo2, setPhoto2] = useState(null);
+	const [photo3, setPhoto3] = useState(null);
+	const [photo4, setPhoto4] = useState(null);
 	const [showCamera, setShowCamera] = useState(false);
 	const [errorNoPhoto, setErrorNoPhoto] = useState(true);
+	const [addMorePictures, setAddMorePictures] = useState(false)
 
 	return (
 		<KeyboardAvoidingView
@@ -31,94 +33,145 @@ export default function NewMarker() {
 			<StatusBar style='auto' />
 			<SafeAreaView style={styles.containerSafeArea}>
 				{showCamera ? (
-					<CameraContainer
-						setPhoto={setPhoto}
+
+					< CameraContainer
+						setPhoto1={setPhoto1}
 						setShowCamera={setShowCamera}
 						setErrorNoPhoto={setErrorNoPhoto}
 						showCamera={showCamera}
 					/>
-				) : (
-					<View
-						style={{
-							flex: 1,
-							width: '100%',
-							justifyContent: 'center',
-							alignContent: 'center',
-							alignItems: 'center',
-							paddingTop: 20,
-						}}
-					>
+
+				) :
+					(
 						<View
 							style={{
-								borderRadius: 10,
-								shadowColor: 'black',
-								shadowRadius: 20,
-								shadowOffset: { width: 0, height: 17 },
-								elevation: 22,
-								shadowOpacity: 2,
-								backgroundColor: 'white',
-								overflow: 'hidden',
-								width: '80%',
-								alignItems: 'center',
+								flex: 1,
+								width: '100%',
 								justifyContent: 'center',
+								alignContent: 'center',
+								alignItems: 'center',
+								paddingTop: 20,
 							}}
-						>
-							<Text
-								style={{
-									fontWeight: 'bold',
-									fontSize: 20,
-								}}
-							>
-								CREAR NUEVO MARCADOR
-							</Text>
-						</View>
-						<ScrollView
-							style={{ width: '100%', top: 15, height: '100%' }}
 						>
 							<View
 								style={{
-									alignContent: 'center',
+									flexDirection: 'row',
+									shadowColor: 'blue',
+									shadowRadius: 1,
+									shadowOffset: { width: 0, height: 0 },
+									elevation: 15,
+									shadowOpacity: 1,
+									width: '95%',
+									overflow: 'hidden',
+									height: 50,
+									borderRadius: 15,
+									backgroundColor: 'white',
 									alignItems: 'center',
-									justifyContent: 'center',
-									paddingTop: 10,
+
 								}}
 							>
-								{photo ? (
-									<View>
-										<TouchableOpacity
-											onPress={() => setPhoto(null)}
-										>
-											<Icon
-												style={{
-													paddingBottom: 0,
-													paddingRight: 5,
-												}}
-												name='times'
-												color='red'
-												type='font-awesome'
-											/>
-										</TouchableOpacity>
-										<Image
-											source={{ uri: photo }}
+								<TouchableOpacity>
+									<View style={{ paddingRight: 10, paddingLeft: 15 }}>
+										<Icon
 											style={{
-												width: 300,
-												height: 300,
-												borderRadius: 20,
 											}}
+											name='arrow-left'
+											color='black'
+											type='font-awesome'
+											size={30}
 										/>
 									</View>
-								) : (
-									<BoxPicture
-										setShowCamera={setShowCamera}
-										showCamera={showCamera}
-										errorNoPhoto={errorNoPhoto}
-									/>
-								)}
-								<FormNewMarker />
+								</TouchableOpacity>
+								<View
+									style={{
+										height: 30,
+										width: '80%',
+										alignItems: 'center',
+										justifyContent: 'center',
+										// backgroundColor: 'red'
+									}}
+								>
+									<Text
+										style={{
+											fontWeight: 'bold',
+											fontSize: 20,
+										}}
+									>
+										CREAR NUEVO MARCADOR
+									</Text>
+								</View>
 							</View>
-						</ScrollView>
-					</View>
-				)}
+							<ScrollView
+								style={{ width: '100%', top: 15, height: '100%' }}
+							>
+								<View
+									style={{
+										alignContent: 'center',
+										alignItems: 'center',
+										justifyContent: 'center',
+										paddingTop: 10,
+									}}
+								>
+									{photo1 ? (
+										<View>
+											<TouchableOpacity
+												onPress={() => setPhoto1(null)}
+											>
+												<Icon
+													style={{
+														paddingBottom: 0,
+														paddingRight: 5,
+													}}
+													name='times'
+													color='red'
+													type='font-awesome'
+												/>
+											</TouchableOpacity>
+											<Image
+												source={{ uri: photo1 }}
+												style={{
+													width: 300,
+													height: 300,
+													borderRadius: 20,
+												}}
+											/>
+										</View>
+									) : (
+										<BoxPicture
+											setShowCamera={setShowCamera}
+											showCamera={showCamera}
+											errorNoPhoto={errorNoPhoto}
+										/>
+
+									)}
+									{
+										photo1 &&
+										<View>
+											<TouchableOpacity onPress={() => setAddMorePictures(true)}>
+												<Text>Agregar mas fotos?</Text>
+											</TouchableOpacity>
+										</View>
+									}
+									{
+										addMorePictures &&
+										<View>
+											<BoxPicture
+												setShowCamera={setShowCamera}
+												showCamera={showCamera}
+												errorNoPhoto={errorNoPhoto}
+											/>
+											<BoxPicture
+												setShowCamera={setShowCamera}
+												showCamera={showCamera}
+												errorNoPhoto={errorNoPhoto}
+											/>
+										</View>
+									}
+									<FormNewMarker />
+								</View>
+							</ScrollView>
+						</View>
+					)}
 			</SafeAreaView>
 		</KeyboardAvoidingView>
 	);
@@ -127,10 +180,9 @@ export default function NewMarker() {
 const styles = StyleSheet.create({
 	containerSafeArea: {
 		flex: 1,
-		// paddingTop: statusBarHeight,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'white',
+		backgroundColor: '#rgb(255, 255, 255)',
 	},
 	photo: {
 		width: '95%',

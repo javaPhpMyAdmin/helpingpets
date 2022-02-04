@@ -1,9 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { Icon } from 'react-native-elements';
+const { width, height } = Dimensions.get('screen');
 
-const CameraContainer = ({ setPhoto, setShowCamera, setErrorNoPhoto }) => {
+const CameraContainer = ({ setPhoto1, setShowCamera, setErrorNoPhoto }) => {
     const cameraRef = useRef(null)
     const [hasPermission, setHasPermission] = useState(null);
 
@@ -18,7 +19,7 @@ const CameraContainer = ({ setPhoto, setShowCamera, setErrorNoPhoto }) => {
         if (cameraRef) {
             const picture = await cameraRef.current.takePictureAsync()
             if (picture) {
-                setPhoto(picture.uri)
+                setPhoto1(picture.uri)
                 setShowCamera(false)
                 setErrorNoPhoto(false)
             }
@@ -35,34 +36,38 @@ const CameraContainer = ({ setPhoto, setShowCamera, setErrorNoPhoto }) => {
     }
 
     return (
-        <Camera
-            ref={cameraRef}
-            style={styles.camera}
-            type={Camera.Constants.Type.back}
-        >
-            <TouchableOpacity
-                style={styles.buttonCloseCamera}
-                onPress={() =>
-                    setShowCamera(false)}>
-                <Icon
-                    name='times'
-                    type='font-awesome'
-                    color='red'
-                    size={40}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => takePicture()}>
-                <Icon
-                    name='camera'
-                    type='font-awesome'
-                    color='white'
-                    size={40}
-                />
-            </TouchableOpacity>
-        </Camera>
-    );
+        <View style={{ flex: 1, width: width, height: height }}>
+            <Camera
+                ref={cameraRef}
+                style={styles.camera}
+                type={Camera.Constants.Type.back}
+            >
+
+                <TouchableOpacity
+                    style={styles.buttonCloseCamera}
+                    onPress={() =>
+                        setShowCamera(false)}>
+                    <Icon
+                        name='times'
+                        type='font-awesome'
+                        color='red'
+                        size={40}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => takePicture()}>
+                    <Icon
+                        name='camera'
+                        type='font-awesome'
+                        color='white'
+                        size={40}
+                    />
+                </TouchableOpacity>
+            </Camera >
+        </View>
+    )
+
 };
 
 export default CameraContainer;

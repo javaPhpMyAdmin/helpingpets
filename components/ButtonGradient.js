@@ -54,10 +54,10 @@ const styles = StyleSheet.create({
 		padding: 10,
 		alignItems: 'center',
 		justifyContent: 'center',
-		shadowColor: '#0a0a0a',
-		shadowRadius: 3,
+		shadowColor: '#080808',
+		shadowRadius: 15,
 		shadowOffset: { width: 7, height: 7 },
 		elevation: 5,
-		shadowOpacity: 1,
+		shadowOpacity: 2,
 	},
 });
