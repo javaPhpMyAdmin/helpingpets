@@ -13,6 +13,7 @@ const GOOGLE_ID_IOS =
 
 export default function GoogleButton() {
 	const navigation = useNavigation();
+	console.log('ME RENDERIZO SOY GOOGLE')
 
 	const signInWithGoogleAsync = async () => {
 		try {
@@ -23,7 +24,7 @@ export default function GoogleButton() {
 			});
 
 			if (result.type === 'success') {
-				navigation.navigate('Home');
+				navigation.navigate('HomeScreen', { user: result.user });
 				console.log('RESULT', result);
 			} else {
 				console.log('NO SUCCESS');
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
 		width: '50%',
 		height: 50,
 		borderRadius: 25,
-		paddingTop: 5,
+		paddingTop: 2,
 		alignItems: 'center',
 		justifyContent: 'center',
 		shadowColor: 'black',

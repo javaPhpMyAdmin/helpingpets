@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import FormLogin from '../components/FormLogin';
 import SvgImage from '../components/SvgImage';
 
+
 import { Icon } from 'react-native-elements';
 const { width, height } = Dimensions.get('screen');
 
@@ -97,7 +98,7 @@ const LoginScreen = () => {
 			style={{ flex: 1 }}
 			keyboardVerticalOffset={Platform.OS === 'ios' ? -154 : 0}
 		>
-			<StatusBar style='black' />
+			<StatusBar animated={true} backgroundColor="gray" hidden={false} />
 			<TouchableWithoutFeedback
 				style={{ flex: 1 }}
 				onPress={Keyboard.dismiss}
@@ -115,7 +116,6 @@ const LoginScreen = () => {
 							{
 								transform: [{ translateY: viewHeight.y }],
 								opacity: opacityView,
-								paddingBottom: 60,
 							},
 						]}
 					>
@@ -131,10 +131,11 @@ const LoginScreen = () => {
 								justifyContent: 'center',
 								width: width,
 								alignItems: 'center',
+								bottom: 30,
 							}}
 						>
 							<View style={{ paddingRight: 20 }}>
-								<TouchableOpacity onPress={() => {}}>
+								<TouchableOpacity onPress={() => { }}>
 									<Text
 										style={{
 											color: 'black',
@@ -152,7 +153,7 @@ const LoginScreen = () => {
 										flexDirection: 'row',
 										paddingRight: 10,
 									}}
-									onPress={() => {}}
+									onPress={() => { }}
 								>
 									<Text
 										style={{
@@ -164,7 +165,7 @@ const LoginScreen = () => {
 										Crear una cuenta
 									</Text>
 									<Icon
-										style={{ paddingTop: 12 }}
+										style={{ paddingTop: 13 }}
 										name='plus'
 										color='black'
 										type='font-awesome'
@@ -185,23 +186,21 @@ export default LoginScreen;
 const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
-		backgroundColor: '#f1f1f1',
+		backgroundColor: '#0000',
 		justifyContent: 'flex-end',
 		height: '100%',
 	},
 	container: {
-		shadowColor: 'black',
-		shadowRadius: 15,
-		shadowOffset: { width: 0, height: -15 },
+		shadowColor: 'gray',
+		shadowRadius: 5,
+		shadowOffset: { width: 0, height: -5 },
 		shadowOpacity: 1,
-		elevation: 10,
+		elevation: 5,
 		alignItems: 'center',
 		justifyContent: 'center',
-		borderColor: 'blue',
 		borderTopLeftRadius: 40,
 		borderTopRightRadius: 40,
-		backgroundColor: '#f9f9f9',
-		paddingBottom: 20,
+		backgroundColor: '#DEE9F7',
 	},
 	title: {
 		paddingTop: 20,
@@ -212,6 +211,7 @@ const styles = StyleSheet.create({
 	subTitle: {
 		fontSize: 20,
 		color: 'gray',
+		paddingBottom: 20
 	},
 	containerSVG: {
 		height: height / 1.78,

@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	StyleSheet,
 	Text,
 	View,
-	Image,
 	SafeAreaView,
 	ScrollView,
 	TouchableOpacity,
 	KeyboardAvoidingView,
 	StatusBar,
 	Modal,
+	LogBox,
 } from 'react-native';
 import FormNewMarker from './FormNewMarker';
 import CameraContainer from './Camera';
-import BoxPicture from './BoxPicture';
+import BoxTakePicture from './BoxTakePicture';
 import { Icon } from 'react-native-elements';
-import ShowPhoto from './ShowPhoto';
+import BoxShowImage from './BoxShowImage';
+import { useNavigation } from '@react-navigation/native';
 
 export default function NewMarker() {
-	const [photo1, setPhoto1] = useState(null);
-
-	const [photo4, setPhoto4] = useState(null);
+	const [photo1, setPhoto1] = useState(false);
 	const [showCamera, setShowCamera] = useState(false);
 
 	const [showCamera2, setShowCamera2] = useState(false);
@@ -31,12 +30,18 @@ export default function NewMarker() {
 
 	const [errorNoPhoto, setErrorNoPhoto] = useState(true);
 	const [addMorePictures, setAddMorePictures] = useState(false);
+	const [addMorePicturesAux, setAddMorePicturesAux] = useState(false)
+
+	const [errorNoPhotoSubmit, setErrorNoPhotoSubmit] = useState(false)
+
+	const navigation = useNavigation()
 
 	return (
 		<KeyboardAvoidingView
-			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			enabled
 			style={{ flex: 1 }}
-			keyboardVerticalOffset={Platform.OS === 'ios' ? -164 : 0}
+			behavior={Platform.OS === 'ios' ? 'padding' : ''}
+			keyboardVerticalOffset={Platform.OS === 'ios' ? -50 : 50}
 		>
 			<StatusBar style='auto' />
 			<SafeAreaView style={styles.containerSafeArea}>
@@ -45,11 +50,12 @@ export default function NewMarker() {
 						setPhoto={setPhoto1}
 						setShowCamera={setShowCamera}
 						setErrorNoPhoto={setErrorNoPhoto}
+						setErrorNoPhotoSubmit={setErrorNoPhotoSubmit}
 					/>
 				) : (
 					<View style={styles.container}>
 						<View style={styles.headerContainer}>
-							<TouchableOpacity>
+							<TouchableOpacity onPress={() => navigation.goBack('HomeScreen')}>
 								<View style={styles.containerArrowIcon}>
 									<Icon
 										name='arrow-left'
@@ -65,113 +71,112 @@ export default function NewMarker() {
 								</Text>
 							</View>
 						</View>
-						<ScrollView style={styles.scrollView}>
+
+						<ScrollView scrollsToTop={true} style={styles.scrollView} bounces={false} keyboardDismissMode='on-drag'>
 							<View style={styles.containerOfScrollView}>
-								{photo1 ? (
-									<View>
-										<TouchableOpacity
-											onPress={() => setPhoto1(null)}
-										>
-											<Icon
-												style={styles.iconClose}
-												name='times'
-												color='red'
-												type='font-awesome'
+								{
+									photo1 ? <BoxShowImage setPhoto={setPhoto1} photo={photo1} />
+										: (
+											<BoxTakePicture
+												setShowCamera={setShowCamera}
+												showCamera={showCamera}
+												errorNoPhoto={errorNoPhoto}
 											/>
-										</TouchableOpacity>
-										<Image
-											source={{ uri: photo1 }}
-											style={styles.photoTook}
+										)
+								}
+
+								{
+									photo1 && (
+										<View>
+											<TouchableOpacity
+												style={{ display: addMorePictures ? 'none' : null }}
+												disabled={addMorePictures}
+												onPress={() => {
+													setAddMorePicturesAux(true)
+													setAddMorePictures(true)
+												}}
+											>
+												<View style={{ flexDirection: 'row' }}>
+													<Text style={styles.addMore}>AGREGAR FOTOS</Text>
+													<Icon
+														style={{ padding: 5, paddingTop: 8, paddingLeft: 10 }}
+														name='plus'
+														color='black'
+														type='font-awesome'
+														size={22}
+													/>
+												</View>
+											</TouchableOpacity>
+										</View>
+									)
+								}
+								{
+									(errorNoPhotoSubmit) && <Text style={styles.textError}>{errorNoPhotoSubmit}</Text>
+								}
+								{
+									(addMorePictures && photo2) && <BoxShowImage setPhoto={setPhoto2} photo={photo2} />
+								}
+								{
+									(addMorePicturesAux && !photo2) && (
+										<BoxTakePicture
+											setShowCamera={setShowCamera2}
+											showCamera={showCamera2}
+											errorNoPhoto={errorNoPhoto}
 										/>
-									</View>
-								) : (
-									<BoxPicture
-										setShowCamera={setShowCamera}
-										showCamera={showCamera}
-										errorNoPhoto={errorNoPhoto}
-									/>
-								)}
-								{photo1 && (
-									<View>
-										<TouchableOpacity
-											disabled={addMorePictures}
-											onPress={() =>
-												setAddMorePictures(true)
-											}
-										>
-											<Text>Agregar mas fotos?</Text>
-										</TouchableOpacity>
-									</View>
-								)}
-								{addMorePictures && (
-									<ShowPhoto
-										photo={photo2}
-										setShowCamera={setShowCamera2}
-										setPhoto={setPhoto2}
-									/>
-								)}
-								{/* {addMorePictures || !photo3 ? (
-									<View>
-										<BoxPicture
+									)
+								}
+								{
+									(addMorePictures && photo3) && <BoxShowImage setPhoto={setPhoto3} photo={photo3} />
+								}
+								{
+									(addMorePicturesAux && !photo3) && (
+										<BoxTakePicture
 											setShowCamera={setShowCamera3}
 											showCamera={showCamera3}
+											errorNoPhoto={errorNoPhoto}
 										/>
-									</View>
-								) : (
-									<View>
-										<TouchableOpacity
-											onPress={() => setPhoto3(null)}
-										>
-											<Icon
-												style={styles.iconClose}
-												name='times'
-												color='red'
-												type='font-awesome'
+									)
+								}
+								{
+									showCamera2 && (
+										<Modal style={styles.modal}>
+											<CameraContainer
+												setPhoto={setPhoto2}
+												setShowCamera={setShowCamera2}
+												setErrorNoPhoto={setErrorNoPhoto}
 											/>
-										</TouchableOpacity>
-										<Image
-											source={{ uri: photo3 }}
-											style={styles.photoTook}
-										/>
-									</View>
-								)} */}
-								{showCamera2 && (
-									<Modal
-										style={{
-											flex: 1,
-											width: '95%',
-											height: '90%',
-										}}
-									>
-										<CameraContainer
-											setPhoto={setPhoto2}
-											setShowCamera={setShowCamera2}
-											setErrorNoPhoto={setErrorNoPhoto}
-										/>
-									</Modal>
-								)}
-								{showCamera3 && (
-									<Modal
-										style={{
-											flex: 1,
-											width: '95%',
-											height: '90%',
-										}}
-									>
-										<CameraContainer
-											setPhoto={setPhoto3}
-											setShowCamera={setShowCamera3}
-											setErrorNoPhoto={setErrorNoPhoto}
-										/>
-									</Modal>
-								)}
-								<FormNewMarker />
+										</Modal>
+									)
+								}
+								{
+									showCamera3 && (
+										<Modal style={styles.modal}>
+											<CameraContainer
+												setPhoto={setPhoto3}
+												setShowCamera={setShowCamera3}
+												setErrorNoPhoto={setErrorNoPhoto}
+											/>
+										</Modal>
+									)
+								}
+								<FormNewMarker
+									photo1={photo1}
+									photo2={photo2}
+									photo3={photo3}
+									setError={setErrorNoPhotoSubmit}
+									setPhoto1={setPhoto1}
+									setPhoto2={setPhoto2}
+									setPhoto3={setPhoto3}
+								/>
 							</View>
 						</ScrollView>
+
 					</View>
-				)}
-			</SafeAreaView>
-		</KeyboardAvoidingView>
+				)
+				}
+			</SafeAreaView >
+		</KeyboardAvoidingView >
+
 	);
 }
 
@@ -189,20 +194,22 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		alignItems: 'center',
 		paddingTop: 20,
+		bottom: 10
 	},
 	headerContainer: {
 		flexDirection: 'row',
 		shadowColor: 'blue',
-		shadowRadius: 1,
-		shadowOffset: { width: 0, height: 0 },
-		elevation: 15,
+		shadowRadius: 10,
+		shadowOffset: { width: -10, height: -10 },
+		elevation: 35,
 		shadowOpacity: 1,
 		width: '95%',
 		overflow: 'hidden',
 		height: 50,
 		borderRadius: 15,
-		backgroundColor: 'white',
+		backgroundColor: '#fff',
 		alignItems: 'center',
+		// borderWidth: 1
 	},
 	containerArrowIcon: {
 		paddingRight: 10,
@@ -222,29 +229,17 @@ const styles = StyleSheet.create({
 		width: '100%',
 		top: 15,
 		height: '100%',
+		bottom: 10,
 	},
 	containerOfScrollView: {
 		alignContent: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingTop: 10,
+		bottom: 10
 	},
 	iconClose: {
-		paddingBottom: 0,
-		paddingRight: 5,
-	},
-	photoTook: {
-		width: 300,
-		height: 300,
-		borderRadius: 20,
-	},
-	photo: {
-		width: '95%',
-		height: '80%',
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingTop: 15,
-		borderRadius: 40,
+		paddingBottom: 10,
 	},
 	modalContainer: {
 		flex: 1,
@@ -257,5 +252,22 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
+	},
+	addMore: {
+		fontSize: 20,
+		top: 5,
+		fontWeight: 'bold',
+	},
+	modal: {
+		flex: 1,
+		width: '95%',
+		height: '90%',
+	},
+	textError: {
+		paddingTop: 5,
+		left: 1,
+		fontSize: 14,
+		paddingLeft: 3,
+		color: 'red',
 	},
 });

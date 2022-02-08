@@ -1,8 +1,8 @@
-import { View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, TextInput, StyleSheet, Platform } from 'react-native';
 import React from 'react';
 import { Icon } from 'react-native-elements';
 
-const BoxPicture = ({ errorNoPhoto, setShowCamera }) => {
+const BoxTakePicture = ({ errorNoPhoto, setShowCamera }) => {
     return (
         <View style={[styles.textInput,
         {
@@ -23,7 +23,7 @@ const BoxPicture = ({ errorNoPhoto, setShowCamera }) => {
                 onPress={() => setShowCamera(true)}
             >
                 <Icon
-                    style={{ paddingBottom: 0, paddingRight: 5 }}
+                    style={{ paddingRight: 5 }}
                     name='camera'
                     color='black'
                     type='font-awesome'
@@ -33,7 +33,7 @@ const BoxPicture = ({ errorNoPhoto, setShowCamera }) => {
     );
 };
 
-export default BoxPicture;
+export default BoxTakePicture;
 
 const styles = StyleSheet.create({
     textInput: {
@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 30,
         backgroundColor: '#fff',
-        shadowColor: 'black',
-        shadowRadius: 17,
-        shadowOffset: { width: 6, height: 7 },
+        shadowColor: Platform.OS === 'ios' ? 'gray' : 'black',
+        shadowRadius: 3,
+        shadowOffset: { width: 3, height: 5 },
         elevation: 12,
         shadowOpacity: 2,
     },

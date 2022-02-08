@@ -1,186 +1,213 @@
-import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import {
-	Dimensions,
+	Platform,
 	StyleSheet,
 	Text,
 	TextInput,
+	TouchableOpacity,
 	TouchableWithoutFeedback,
 } from 'react-native';
 import { View } from 'react-native';
-import ButtonGradient from './ButtonGradient';
 import * as Yup from 'yup';
 import { Icon } from 'react-native-elements';
 import { useState } from 'react';
 import GoogleButton from './GoogleButton';
-const { width, height } = Dimensions.get('screen');
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SignInSchema = Yup.object().shape({
 	email: Yup.string()
-		.email('Ingrese un email valido')
+		.email('Ingrese un email válido')
 		.required('Por favor ingrese un email'),
 	password: Yup.string().required('Por favor ingrese su contraseña'),
 });
 
 const FormLogin = () => {
 	const [showPassword, setShowPassword] = useState(false);
+
 	return (
-		<Formik
-			initialValues={{ email: '', password: '' }}
-			validationSchema={SignInSchema}
-			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2));
-					setSubmitting(false);
-				}, 400);
-			}}
-		>
-			{({
-				values,
-				errors,
-				touched,
-				handleChange,
-				handleBlur,
-				handleSubmit,
-				isSubmitting,
-				isValid,
-			}) => (
-				<>
-					<View
-						style={[
-							styles.textInput,
-							{
-								justifyContent: 'space-around',
-								flexDirection: 'row',
-								borderColor: errors.email
-									? 'red'
-									: 'transparent',
-								borderWidth: errors.email ? 1 : 0.3,
-							},
-						]}
-					>
-						<TextInput
-							onChangeText={handleChange('email')}
-							style={{ width: '100%', paddingLeft: 10 }}
-							name='email'
-							placeholder='Ingresa tu email'
-							value={values.email}
-							onBlur={handleBlur('email')}
-							keyboardType='email-address'
-							autoCorrect={false}
-						/>
-						{!errors.email && touched.email ? (
-							<Icon
-								style={{ paddingBottom: 0, paddingRight: 5 }}
-								name='check'
-								color='green'
-								type='font-awesome'
-							/>
-						) : (
-							<Icon
-								style={{ paddingBottom: 0, paddingRight: 5 }}
-								name='times'
-								color='red'
-								type='font-awesome'
-							/>
-						)}
-					</View>
+		<View style={{ alignItems: 'center', justifyContent: 'space-between', height: 320, backgroundColor: '#DEE9F7' }}>
+			<Formik
+				initialValues={{ email: '', password: '' }}
+				validationSchema={SignInSchema}
+				onSubmit={(values, { setSubmitting }) => {
+					setTimeout(() => {
+						alert(JSON.stringify(values, null, 2));
+						setSubmitting(false);
+					}, 400);
+				}}
+			>
+				{({
+					values,
+					errors,
+					touched,
+					handleChange,
+					handleBlur,
+					handleSubmit,
+					isSubmitting,
+					isValid,
+				}) => (
 
-					{errors.email ? (
-						<Text style={styles.textError}>{errors.email}</Text>
-					) : null}
-
-					<View
-						style={[
-							styles.textInput,
-							{
-								justifyContent: 'space-around',
-								flexDirection: 'row',
-								borderColor:
-									errors.password && touched.password
-										? 'red'
-										: 'transparent',
-								borderWidth:
-									errors.password && touched.password
-										? 1
-										: 0.3,
-							},
-						]}
-					>
-						<TextInput
-							onChangeText={handleChange('password')}
-							style={{ width: '100%', paddingLeft: 10 }}
-							name='password'
-							placeholder='Ingresa tu contraseña'
-							value={values.password}
-							secureTextEntry={!showPassword}
-							onBlur={handleBlur('password')}
-						/>
-						{showPassword ? (
-							<TouchableWithoutFeedback
-								onPress={() => setShowPassword(!showPassword)}
-							>
+					<>
+						<View
+							style={[
+								styles.textInput,
+								{
+									justifyContent: 'space-around',
+									flexDirection: 'row',
+									borderColor:
+										errors.email && touched.email
+											? 'red'
+											: 'white',
+									borderWidth:
+										errors.email && touched.email
+											? 1
+											: 1,
+								}
+							]}
+						>
+							<TextInput
+								onChangeText={handleChange('email')}
+								style={{ width: '100%', paddingLeft: 10 }}
+								name='email'
+								placeholder='Ingresa tu email'
+								value={values.email}
+								onBlur={handleBlur('email')}
+								keyboardType='email-address'
+								autoCorrect={false}
+							/>
+							{!errors.email && touched.email ? (
 								<Icon
-									style={{
-										paddingBottom: 0,
-										paddingRight: 5,
-									}}
-									name='eye'
-									color='black'
+									style={{ paddingBottom: 0, paddingRight: 5 }}
+									name='check'
+									color='green'
 									type='font-awesome'
 								/>
-							</TouchableWithoutFeedback>
-						) : (
-							<TouchableWithoutFeedback
-								onPress={() => setShowPassword(!showPassword)}
-							>
+							) : (
 								<Icon
-									style={{
-										paddingBottom: 0,
-										paddingRight: 5,
-									}}
-									name='eye-slash'
-									color='black'
+									style={{ paddingBottom: 0, paddingRight: 15 }}
+									name='times'
+									color='red'
 									type='font-awesome'
 								/>
-							</TouchableWithoutFeedback>
-						)}
-					</View>
-					{errors.password && touched.password && (
-						<Text style={styles.textError}>{errors.password}</Text>
-					)}
-					<View
-						style={{
-							width: '80%',
-							borderBottomColor: 'gray',
-							borderBottomWidth: 0.6,
-							paddingTop: 25,
-							paddingBottom: 0,
-						}}
-					></View>
-					<View
-						style={{
-							flexDirection: 'row',
-							width: '100%',
-							alignItems: 'center',
-							justifyContent: 'center',
-							top: 0,
-						}}
-					>
-						<View style={{ left: 20, paddingRight: 15 }}>
-							<GoogleButton />
+							)}
 						</View>
-						<View style={{ right: 89 }}>
-							<ButtonGradient
-								handleSubmit={handleSubmit}
-								isValid={isValid}
-								titleButton='INGRESAR'
+						{errors.email ? (
+							<Text style={styles.textError}>{errors.email}</Text>
+						) : null}
+						<View
+							style={[
+								styles.textInput,
+								{
+									justifyContent: 'space-around',
+									flexDirection: 'row',
+									borderColor:
+										errors.password && touched.password
+											? 'red'
+											: 'white',
+									borderWidth:
+										errors.password && touched.password
+											? 1
+											: 1,
+								}
+							]}
+						>
+							<TextInput
+								onChangeText={handleChange('password')}
+								style={{ width: '100%', paddingLeft: 10 }}
+								name='password'
+								placeholder='Ingresa tu contraseña'
+								value={values.password}
+								secureTextEntry={!showPassword}
+								onBlur={handleBlur('password')}
 							/>
+							{showPassword ? (
+								<TouchableWithoutFeedback
+									onPress={() => setShowPassword(!showPassword)}
+								>
+									<Icon
+										style={{
+											paddingBottom: 0,
+											paddingRight: 15,
+										}}
+										name='eye'
+										color='black'
+										type='font-awesome'
+									/>
+								</TouchableWithoutFeedback>
+							) : (
+								<TouchableWithoutFeedback
+									onPress={() => setShowPassword(!showPassword)}
+								>
+									<Icon
+										style={{
+											paddingBottom: 0,
+											paddingRight: 15,
+										}}
+										name='eye-slash'
+										color='black'
+										type='font-awesome'
+									/>
+								</TouchableWithoutFeedback>
+							)}
 						</View>
-					</View>
-				</>
-			)}
-		</Formik>
+
+						{errors.password && touched.password && (
+							<Text style={styles.textError}>{errors.password}</Text>
+						)}
+						<View
+							style={{
+								width: '80%',
+								height: 1,
+								borderBottomColor: 'red',
+								borderBottomWidth: 1.6,
+								paddingTop: 5,
+							}}
+						><Text></Text></View>
+						<View
+							style={{
+								alignItems: 'center',
+								justifyContent: 'center',
+								bottom: 30,
+								left: 95
+							}}
+						>
+							<TouchableOpacity
+								style={styles.container}
+								onPress={handleSubmit}
+								disabled={!isValid}
+							>
+								{
+									(!isValid) ? (
+										<LinearGradient
+											// Button Linear Gradient
+											colors={['gray', 'black']}
+											start={{ x: 0, y: 0 }}
+											end={{ x: 1, y: 1 }}
+											style={[styles.button]}
+										>
+											<Text style={styles.text}>INGRESAR</Text>
+										</LinearGradient>
+									) : (
+										<LinearGradient
+											// Button Linear Gradient
+											colors={['#FFB677', '#FF3CBD']}
+											start={{ x: 0, y: 0 }}
+											end={{ x: 1, y: 1 }}
+											style={styles.button}
+										>
+											{isSubmitting ? <Text style={styles.text}>INGRESANDO...</Text> : <Text style={styles.text}>INGRESAR</Text>}
+										</LinearGradient>
+									)
+								}
+							</TouchableOpacity>
+						</View>
+					</>
+				)}
+			</Formik>
+			<View style={{ right: 195, paddingRight: 0, bottom: 40, position: 'absolute', width: '40%', alignItems: 'center' }}>
+				<GoogleButton />
+			</View>
+		</View>
 	);
 };
 
@@ -189,23 +216,48 @@ export default FormLogin;
 const styles = StyleSheet.create({
 	textInput: {
 		paddingStart: 15,
-		width: '80%',
-		height: 54,
+		width: '95%',
+		height: 60,
 		padding: 15,
-		marginTop: 20,
+		marginTop: 5,
+		bottom: 0,
 		borderRadius: 30,
-		backgroundColor: '#fff',
-		shadowColor: 'black',
-		shadowRadius: 5,
-		shadowOffset: { width: 5, height: 20 },
-		elevation: 10,
-		shadowOpacity: 0.9,
+		backgroundColor: '#DEE9F7',
+		shadowColor: Platform.OS === 'ios' ? '#99c4db' : 'black',
+		shadowRadius: 6,
+		shadowOffset: { width: 10, height: 8 },
+		elevation: 8,
+		shadowOpacity: 1,
 	},
 
 	textError: {
-		paddingTop: 15,
+		paddingTop: 5,
 		fontSize: 16,
 		paddingLeft: 3,
 		color: 'red',
+	},
+	container: {
+		alignItems: 'center',
+		width: 220,
+		marginTop: 0,
+		padding: 10,
+	},
+	text: {
+		fontSize: 19,
+		color: '#fff',
+		fontWeight: 'bold',
+	},
+	button: {
+		width: '85%',
+		height: 50,
+		borderRadius: 25,
+		padding: 10,
+		alignItems: 'center',
+		justifyContent: 'center',
+		shadowColor: Platform.OS === 'ios' ? '#72a0b9' : 'black',
+		shadowRadius: 6,
+		shadowOffset: { width: -10, height: -18 },
+		elevation: Platform.OS === 'ios' ? null : 8,
+		shadowOpacity: 1,
 	},
 });

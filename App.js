@@ -6,9 +6,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ScreenStack } from 'react-native-screens';
 import LoginScreen from './screens/LoginScreen';
 const Stack = createNativeStackNavigator();
-import ImagePickerComponent from './components/ImagePicker';
 import NewMarker from './components/NewMarker';
 import { Constants } from 'expo-camera';
+import testNeuro from './components/testNeuro';
+import 'react-native-gesture-handler'
 
 const heightStatusBar = Constants.StatusBarHeight;
 
@@ -16,10 +17,15 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<SafeAreaProvider style={{ paddingTop: heightStatusBar }}>
-				<Stack.Navigator initialRouteName='NewMarker'>
+				<Stack.Navigator initialRouteName='HomeScreen'>
 					<Stack.Screen
-						name='Login'
+						name='LoginScreen'
 						component={LoginScreen}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name='TestNeuro'
+						component={testNeuro}
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
@@ -28,7 +34,7 @@ export default function App() {
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
-						name='Home'
+						name='HomeScreen'
 						component={HomeScreen}
 						options={{ headerShown: false }}
 					/>

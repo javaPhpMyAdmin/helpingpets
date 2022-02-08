@@ -10,7 +10,7 @@ import { Camera } from 'expo-camera';
 import { Icon } from 'react-native-elements';
 const { width, height } = Dimensions.get('screen');
 
-const CameraContainer = ({ setPhoto, setShowCamera, setErrorNoPhoto }) => {
+const CameraContainer = ({ setPhoto, setShowCamera, setErrorNoPhoto, setErrorNoPhotoSubmit }) => {
 	const cameraRef = useRef(null);
 	const [hasPermission, setHasPermission] = useState(null);
 
@@ -28,6 +28,7 @@ const CameraContainer = ({ setPhoto, setShowCamera, setErrorNoPhoto }) => {
 				setPhoto(picture.uri);
 				setShowCamera(false);
 				setErrorNoPhoto(false);
+				setErrorNoPhotoSubmit(false)
 			}
 		}
 	};

@@ -2,34 +2,37 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function ButtonGradient({ handleSubmit, isValid, titleButton }) {
+export default function ButtonGradient({ handleSubmit, isValid, titleButton, isSubmitting, thereIsPhoto }) {
+	console.log('Button Gradient', thereIsPhoto)
 	return (
 		<TouchableOpacity
 			style={styles.container}
 			onPress={handleSubmit}
 			disabled={!isValid}
 		>
-			{!isValid ? (
-				<LinearGradient
-					// Button Linear Gradient
-					colors={['gray', 'black']}
-					start={{ x: 0, y: 0 }}
-					end={{ x: 1, y: 1 }}
-					style={[styles.button]}
-				>
-					<Text style={styles.text}>{titleButton}</Text>
-				</LinearGradient>
-			) : (
-				<LinearGradient
-					// Button Linear Gradient
-					colors={['#FFB677', '#FF3CBD']}
-					start={{ x: 0, y: 0 }}
-					end={{ x: 1, y: 1 }}
-					style={styles.button}
-				>
-					<Text style={styles.text}>INGRESAR</Text>
-				</LinearGradient>
-			)}
+			{
+				(!isValid && thereIsPhoto) ? (
+					<LinearGradient
+						// Button Linear Gradient
+						colors={['gray', 'black']}
+						start={{ x: 0, y: 0 }}
+						end={{ x: 1, y: 1 }}
+						style={[styles.button]}
+					>
+						<Text style={styles.text}>{titleButton}</Text>
+					</LinearGradient>
+				) : (
+					<LinearGradient
+						// Button Linear Gradient
+						colors={['#FFB677', '#FF3CBD']}
+						start={{ x: 0, y: 0 }}
+						end={{ x: 1, y: 1 }}
+						style={styles.button}
+					>
+						{isSubmitting ? <Text style={styles.text}>ENVIANDO...</Text> : <Text style={styles.text}>{titleButton}</Text>}
+					</LinearGradient>
+				)
+			}
 		</TouchableOpacity>
 	);
 }
