@@ -9,7 +9,6 @@ import {
 	KeyboardAvoidingView,
 	StatusBar,
 	Modal,
-	LogBox,
 } from 'react-native';
 import FormNewMarker from './FormNewMarker';
 import CameraContainer from './Camera';
@@ -72,7 +71,11 @@ export default function NewMarker() {
 							</View>
 						</View>
 
-						<ScrollView scrollsToTop={true} style={styles.scrollView} bounces={false} keyboardDismissMode='on-drag'>
+						<ScrollView
+							scrollsToTop={true}
+							style={styles.scrollView}
+							bounces={false}
+						>
 							<View style={styles.containerOfScrollView}>
 								{
 									photo1 ? <BoxShowImage setPhoto={setPhoto1} photo={photo1} />
@@ -139,7 +142,7 @@ export default function NewMarker() {
 								}
 								{
 									showCamera2 && (
-										<Modal style={styles.modal}>
+										<Modal animationType='slide' style={styles.modal}>
 											<CameraContainer
 												setPhoto={setPhoto2}
 												setShowCamera={setShowCamera2}
@@ -150,7 +153,7 @@ export default function NewMarker() {
 								}
 								{
 									showCamera3 && (
-										<Modal style={styles.modal}>
+										<Modal animationType='slide' style={styles.modal}>
 											<CameraContainer
 												setPhoto={setPhoto3}
 												setShowCamera={setShowCamera3}

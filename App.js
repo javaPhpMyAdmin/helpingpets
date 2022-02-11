@@ -3,15 +3,16 @@ import MapScreen from './screens/MapScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ScreenStack } from 'react-native-screens';
 import LoginScreen from './screens/LoginScreen';
-const Stack = createNativeStackNavigator();
 import NewMarker from './components/NewMarker';
 import { Constants } from 'expo-camera';
-import testNeuro from './components/testNeuro';
 import 'react-native-gesture-handler'
+import Details from './components/Details';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
 const heightStatusBar = Constants.StatusBarHeight;
+
+const Stack = createSharedElementStackNavigator();
 
 export default function App() {
 	return (
@@ -24,9 +25,12 @@ export default function App() {
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
-						name='TestNeuro'
-						component={testNeuro}
+						name='DetailsScreen'
+						component={Details}
 						options={{ headerShown: false }}
+						sharedElements={(route) => {
+							return [route.params.item.images[0].id]
+						}}
 					/>
 					<Stack.Screen
 						name='NewMarker'

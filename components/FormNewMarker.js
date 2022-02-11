@@ -114,43 +114,6 @@ const FormNewMarker = ({ photo1, photo2, photo3, setError, setPhoto1, setPhoto2,
 							autoCorrect={false}
 						/>
 					</View>
-					{/*TEst scroll*/}
-					<View
-						style={[
-							styles.textInput,
-							{
-								justifyContent: 'space-around',
-								flexDirection: 'row',
-								height: 250,
-								borderColor:
-									errors.description && touched.description
-										? 'red'
-										: 'transparent',
-								borderWidth:
-									errors.description && touched.description
-										? 1
-										: 0.3,
-							},
-						]}
-					>
-						<TextInput
-							onChangeText={handleChange('description')}
-							style={{
-								width: '100%',
-								paddingLeft: 10,
-								textAlignVertical: 'top',
-							}}
-							name='description'
-							placeholder='Ingresa una descripción'
-							value={values.description}
-							onBlur={handleBlur('description')}
-							multiline={true}
-							numberOfLines={4}
-							maxLength={400}
-							autoCorrect={false}
-						/>
-					</View>
-					{/*TEst scroll*/}
 					{errors.description && touched.description && (
 						<Text style={styles.textError}>
 							{errors.description}
