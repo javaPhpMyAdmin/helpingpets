@@ -13,7 +13,6 @@ const GOOGLE_ID_IOS =
 
 export default function GoogleButton() {
 	const navigation = useNavigation();
-	console.log('ME RENDERIZO SOY GOOGLE')
 
 	const signInWithGoogleAsync = async () => {
 		try {

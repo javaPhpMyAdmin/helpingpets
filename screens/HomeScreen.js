@@ -1,9 +1,12 @@
-import { Text, View, SafeAreaView, StyleSheet, Dimensions, Image, TouchableOpacity, Platform, Animated, StatusBar } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, Dimensions, Image, TouchableOpacity, Platform, Animated } from 'react-native';
 import React, { useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { SharedElement } from 'react-navigation-shared-element';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { StatusBar } from 'expo-status-bar';
+
+// console.log(StatusBarHeight);
 
 const { width, height } = Dimensions.get('screen')
 const TOP = `${Platform.OS === 'ios' ? (height / 200) : (height / 200)}%`
@@ -216,22 +219,31 @@ const DATA = [
 ];
 const ITEM_SIZE = HEIGHT_IMAGE_POR
 
-// console.log(width);
-
 const HomeScreen = () => {
 	const navigation = useNavigation();
 	const scrollY = useRef(new Animated.Value(0)).current
 	return (
 		<>
-			<StatusBar style='auto' />
+			<StatusBar animated={true} backgroundColor="white" hidden={false} />
 			<SafeAreaView style={styles.safeAreaContainer}>
-				<View style={styles.headerContainer}>
-					<View style={styles.containerTitle}>
-						<Text style={styles.headerTitle}>
-							ÚLTIMOS REGISTROS
-						</Text>
+				<View style={[styles.containerTitle, { width: '95%', height: '7%', alignItems: 'flex-start', justifyContent: 'space-between', left: 2, top: 1, flexDirection: 'row' }]}>
+					<View style={{ paddingRight: 20, width: '90%' }}>
+						<View>
+							<Text style={styles.headerTitleDate}>
+								Lunes, 27 Mayo
+							</Text>
+						</View>
+						<View>
+							<Text style={[styles.headerTitle, { height: '90%' }]}>
+								Últimos Registros
+							</Text>
+						</View>
+					</View>
+					<View style={{ top: 10, right: 10 }}>
+						<Icon name='users' type='font-awesome' size={35} />
 					</View>
 				</View>
+
 				<View
 					style={styles.flatListContainer}
 				>
@@ -307,7 +319,7 @@ const HomeScreen = () => {
 						<TouchableOpacity style={styles.addButtonContainer} onPress={() => navigation.navigate('NewMarker')}>
 							<Text style={{ padding: 5, fontSize: 15, fontWeight: 'bold', fontStyle: 'italic', color: 'white' }}>AGREGAR NUEVO REGISTRO</Text>
 							<View style={{ paddingBottom: 1, paddingLeft: 10 }}>
-								<Icon name='plus-circle' type='font-awesome' size={37} color='white' />
+								<Icon name='plus-circle' type='font-awesome' size={30} color='white' />
 							</View>
 						</TouchableOpacity>
 					</View>
@@ -321,8 +333,8 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
 	safeAreaContainer: {
-		top: StatusBar.statusBarHeight,
 		flex: 1,
+		// top: Platform.OS === 'ios' ? 0 : 30,
 		backgroundColor: '#rgb(255, 255, 255)',
 		width: '100%',
 		height: '100%',
@@ -338,34 +350,35 @@ const styles = StyleSheet.create({
 		shadowOpacity: 1,
 		width: '95%',
 		overflow: 'hidden',
-		height: 40,
+		height: 50,
 		borderRadius: 15,
-		backgroundColor: '#rgb(255, 255, 255)',
+		backgroundColor: 'blue' /*'#rgb(255, 255, 255)'*/,
 		alignItems: 'center',
 		justifyContent: 'center',
-		top: 10,
+		top: 5,
 		borderColor: 'yellow',
 		borderWidth: 0.5
 	},
 	flatListContainer: {
 		width: width,
-		top: 20,
+		top: 6,
 		height: '81%',
 		backgroundColor: '#rgb(255, 255, 255)',
 		alignItems: 'center',
 		paddingBottom: 0
 	},
 	containerTitle: {
-		height: 30,
+		height: 35,
 		width: '80%',
-		alignItems: 'center',
-		justifyContent: 'center',
+		alignItems: 'flex-start',
+		justifyContent: 'flex-end',
+		backgroundColor: '#rgb(255, 255, 255)'
 	},
 	headerTitle: {
 		fontWeight: 'bold',
-		fontSize: 20,
-		fontStyle: 'italic',
-		letterSpacing: 2.5
+		fontSize: 25,
+		// fontStyle: '',
+		letterSpacing: 1.2
 	},
 	itemContainer: {
 		left: 6,
@@ -404,7 +417,8 @@ const styles = StyleSheet.create({
 		paddingBottom: 0,
 		fontWeight: 'bold',
 		fontSize: width < 380 ? 14 : 16,
-		color: 'black'
+		color: 'black',
+		opacity: .5
 	},
 	itemDetailsContainer: {
 		top: 0,
@@ -438,7 +452,7 @@ const styles = StyleSheet.create({
 	},
 	addButtonContainer: {
 		marginTop: 1,
-		marginBottom: 0,
+		marginBottom: 10,
 		width: '80%',
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -453,5 +467,11 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 6, height: 6 },
 		elevation: Platform.OS === 'ios' ? null : 6,
 		shadowOpacity: 1,
+	},
+	headerTitleDate: {
+		fontSize: 15,
+		fontWeight: 'bold',
+		opacity: .5,
+		padding: 1
 	}
 })

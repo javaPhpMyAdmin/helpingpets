@@ -13,6 +13,7 @@ import { Icon } from 'react-native-elements';
 import { useState } from 'react';
 import GoogleButton from './GoogleButton';
 import { LinearGradient } from 'expo-linear-gradient';
+// import { MotiView } from 'moti';
 
 const SignInSchema = Yup.object().shape({
 	email: Yup.string()
@@ -75,9 +76,9 @@ const FormLogin = () => {
 								keyboardType='email-address'
 								autoCorrect={false}
 							/>
-							{!errors.email && touched.email ? (
+							{!errors.email /*&& touched.email*/ ? (
 								<Icon
-									style={{ paddingBottom: 0, paddingRight: 5 }}
+									style={{ paddingBottom: 0, right: 25 }}
 									name='check'
 									color='green'
 									type='font-awesome'
@@ -91,7 +92,7 @@ const FormLogin = () => {
 								/>
 							)}
 						</View>
-						{errors.email ? (
+						{errors.email && touched.email ? (
 							<Text style={styles.textError}>{errors.email}</Text>
 						) : null}
 						<View
@@ -164,6 +165,14 @@ const FormLogin = () => {
 							}}
 						><Text></Text></View>
 						<View
+							// from={{
+							// 	scale: 0,
+							// 	translateX: -10,
+							// }}
+							// animate={{
+							// 	scale: 1,
+							// 	translateX: 0,
+							// }}
 							style={{
 								alignItems: 'center',
 								justifyContent: 'center',

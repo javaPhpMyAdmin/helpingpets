@@ -6,7 +6,6 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	Keyboard,
-	StatusBar,
 	Image,
 	TouchableOpacity,
 } from 'react-native';
@@ -14,15 +13,23 @@ import { TouchableWithoutFeedback, Animated } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import FormLogin from '../components/FormLogin';
 import SvgImage from '../components/SvgImage';
-
-
 import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+import * as Animatable from 'react-native-animatable'
+
 const { width, height } = Dimensions.get('screen');
 
 const LoginScreen = () => {
 	const [viewHeight] = useState(new Animated.ValueXY({ x: 0, y: 50 }));
 	const [opacityView] = useState(new Animated.Value(0));
 	const [logo] = useState(new Animated.ValueXY({ x: 170, y: 150 }));
+
+	const navigation = useNavigation()
+
+	const letterAnimation = {
+		0: { opacity: 0, translateY: -42, },
+		1: { opacity: 1, translateY: 0, }
+	}
 
 	useEffect(() => {
 		const keyboardDidShowListener = Keyboard.addListener(
@@ -98,7 +105,6 @@ const LoginScreen = () => {
 			style={{ flex: 1 }}
 			keyboardVerticalOffset={Platform.OS === 'ios' ? -154 : 0}
 		>
-			<StatusBar animated={true} backgroundColor="gray" hidden={false} />
 			<TouchableWithoutFeedback
 				style={{ flex: 1 }}
 				onPress={Keyboard.dismiss}
@@ -119,7 +125,22 @@ const LoginScreen = () => {
 							},
 						]}
 					>
-						<Text style={styles.title}>Bienvenido</Text>
+						<View
+							style={[styles.title, { flexDirection: 'row' }]}>
+							{'Bienvenido'.split('').map((letter, index) => {
+								return (
+									<Animatable.Text
+										useNativeDriver
+										animation={letterAnimation}
+										delay={300 + index * 50}
+										key={`${letter}-${index}`}
+										style={styles.heading}
+									>
+										{letter}
+									</Animatable.Text>)
+							}
+							)}
+						</View>
 						<Text style={styles.subTitle}>
 							Ingresa con tu cuenta
 						</Text>
@@ -153,7 +174,7 @@ const LoginScreen = () => {
 										flexDirection: 'row',
 										paddingRight: 10,
 									}}
-									onPress={() => { }}
+									onPress={() => { navigation.navigate('NewAccount') }}
 								>
 									<Text
 										style={{
@@ -219,4 +240,11 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	heading: {
+		color: 'black',
+		fontSize: 32,
+		textTransform: 'uppercase',
+		fontWeight: '800',
+		letterSpacing: 2,
+	}
 });
