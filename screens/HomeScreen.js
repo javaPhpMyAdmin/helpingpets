@@ -1,10 +1,11 @@
-import { Text, View, SafeAreaView, StyleSheet, Dimensions, Image, TouchableOpacity, Platform, Animated } from 'react-native';
-import React, { useRef } from 'react';
+import { Text, View, SafeAreaView, StyleSheet, Dimensions, Image, TouchableOpacity, Platform, TouchableWithoutFeedback } from 'react-native';
+import React, { useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { SharedElement } from 'react-navigation-shared-element';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TapGestureHandler } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
+import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 
 // console.log(StatusBarHeight);
 
@@ -222,14 +223,50 @@ const ITEM_SIZE = HEIGHT_IMAGE_POR
 const HomeScreen = () => {
 	const navigation = useNavigation();
 	const scrollY = useRef(new Animated.Value(0)).current
+	const pressed = useSharedValue(-120);
+
+	const eventHandler = useAnimatedGestureHandler({
+		onStart: (event, ctx) => {
+			pressed.value = true;
+
+		},
+		onEnd: (event, ctx) => {
+			pressed.value = false;
+		},
+	});
+
+	const startAnimation = () => {
+		pressed.value = withSpring(0, { damping: 20, mass: 5, stiffness: 100 })
+	}
+
+	const buttonAmimatedStyles2 = useAnimatedStyle(() => {
+		return {
+			// transform: [{ scale: pressed.value ? 1.3 : 1.2 }],
+			// backgroundColor: pressed.value ? '#FEEF86' : '#001972',
+			transform: [{ translateX: pressed.value }],
+		};
+	})
+
+	useEffect(() => {
+		startAnimation()
+	}, [])
+
+	const buttonAmimatedStyles = useAnimatedStyle(() => {
+		return {
+			// transform: [{ scale: pressed.value ? 1.3 : 1.2 }],
+			// backgroundColor: pressed.value ? '#FEEF86' : '#001972',
+			// // transform: [{ scale: withSpring(1, { duration: 2000 }) }],
+		};
+	})
+
 	return (
 		<>
 			<StatusBar animated={true} backgroundColor="white" hidden={false} />
 			<SafeAreaView style={styles.safeAreaContainer}>
 				<View style={[styles.containerTitle, { width: '95%', height: '7%', alignItems: 'flex-start', justifyContent: 'space-between', left: 2, top: 1, flexDirection: 'row' }]}>
-					<View style={{ paddingRight: 20, width: '90%' }}>
+					<Animated.View style={[buttonAmimatedStyles2, { paddingRight: 20, width: '90%' }]}>
 						<View>
-							<Text style={styles.headerTitleDate}>
+							<Text style={[styles.headerTitleDate]}>
 								Lunes, 27 Mayo
 							</Text>
 						</View>
@@ -238,7 +275,7 @@ const HomeScreen = () => {
 								Últimos Registros
 							</Text>
 						</View>
-					</View>
+					</Animated.View>
 					<View style={{ top: 10, right: 10 }}>
 						<Icon name='users' type='font-awesome' size={35} />
 					</View>
@@ -304,7 +341,6 @@ const HomeScreen = () => {
 													</View>
 												</TouchableOpacity>
 											</View>
-
 										</Animated.View>
 									</TouchableWithoutFeedback>
 
@@ -314,15 +350,20 @@ const HomeScreen = () => {
 						keyExtractor={item => item.id}
 					/>
 				</View>
-				<View style={styles.lastView}>
-					<View>
-						<TouchableOpacity style={styles.addButtonContainer} onPress={() => navigation.navigate('NewMarker')}>
+
+				<View style={[styles.lastView]}>
+
+					<TouchableOpacity ><TapGestureHandler onGestureEvent={eventHandler}>
+						<Animated.View style={[styles.addButtonContainer, buttonAmimatedStyles]}>
+							{/* /*onPress={() => navigation.navigate('NewMarker')}*/}
 							<Text style={{ padding: 5, fontSize: 15, fontWeight: 'bold', fontStyle: 'italic', color: 'white' }}>AGREGAR NUEVO REGISTRO</Text>
 							<View style={{ paddingBottom: 1, paddingLeft: 10 }}>
 								<Icon name='plus-circle' type='font-awesome' size={30} color='white' />
 							</View>
-						</TouchableOpacity>
-					</View>
+						</Animated.View>
+					</TapGestureHandler>
+					</TouchableOpacity>
+
 				</View>
 			</SafeAreaView>
 		</>
