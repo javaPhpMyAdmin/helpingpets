@@ -19,7 +19,7 @@ const SignInSchema = Yup.object().shape({
         .email('Ingrese un email válido')
         .required('Por favor ingrese un email'),
     password: Yup.string().required('Por favor ingrese su contraseña'),
-    confirmPassword: Yup.string().required('Por favor confirme su contraseña'),
+    confirmPassword: Yup.string().required('Por favor confirme su contraseña').oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden'),
 });
 
 const FormLogin = () => {

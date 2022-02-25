@@ -1,17 +1,13 @@
-import { Text, View, SafeAreaView, StyleSheet, Dimensions, Image, TouchableOpacity, Platform, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, Dimensions, Image, TouchableOpacity, Platform, TouchableWithoutFeedback, Animated } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { SharedElement } from 'react-navigation-shared-element';
-import { TapGestureHandler } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
-
-// console.log(StatusBarHeight);
 
 const { width, height } = Dimensions.get('screen')
 const TOP = `${Platform.OS === 'ios' ? (height / 200) : (height / 200)}%`
-const HEIGHT_IMAGE_POR = width - 99
+const HEIGHT_IMAGE_POR = width - 105
 const MARGIN_VERTICAL = 15
 const DATA = [
 	{
@@ -223,48 +219,46 @@ const ITEM_SIZE = HEIGHT_IMAGE_POR
 const HomeScreen = () => {
 	const navigation = useNavigation();
 	const scrollY = useRef(new Animated.Value(0)).current
-	const pressed = useSharedValue(-120);
+	// const pressed = useSharedValue(-120);
 
-	const eventHandler = useAnimatedGestureHandler({
-		onStart: (event, ctx) => {
-			pressed.value = true;
+	// const startAnimation = () => {
+	// 	pressed.value = withSpring(0, { damping: 20, mass: 5, stiffness: 100 })
+	// }
 
-		},
-		onEnd: (event, ctx) => {
-			pressed.value = false;
-		},
-	});
+	// const buttonAmimatedStyles2 = useAnimatedStyle(() => {
+	// 	return {
+	// 		// transform: [{ scale: pressed.value ? 1.3 : 1.2 }],
+	// 		// backgroundColor: pressed.value ? '#FEEF86' : '#001972',
+	// 		transform: [{ translateX: pressed.value }],
+	// 	};
+	// })
 
-	const startAnimation = () => {
-		pressed.value = withSpring(0, { damping: 20, mass: 5, stiffness: 100 })
-	}
 
-	const buttonAmimatedStyles2 = useAnimatedStyle(() => {
-		return {
-			// transform: [{ scale: pressed.value ? 1.3 : 1.2 }],
-			// backgroundColor: pressed.value ? '#FEEF86' : '#001972',
-			transform: [{ translateX: pressed.value }],
-		};
-	})
+	// const scrollY = useSharedValue(0);
+	// const scrollHandler = useAnimatedScrollHandler({
+	// 	onScroll: (e) => {
+	// 		scrollY.value = e.contentOffset.y;
+	// 	},
+	// });
+
+	// const animatedStyles = useAnimatedStyle(() => {
+	// 	const scale = interpolate(scrollY.value, [-1, 0, ITEM_SIZE * 0, ITEM_SIZE + 1], [1, 1, 1, 0],);
+	// 	return {
+	// 		transform: [{ scale: scale }],
+	// 	};
+	// })
 
 	useEffect(() => {
-		startAnimation()
+		// startAknimation()
 	}, [])
 
-	const buttonAmimatedStyles = useAnimatedStyle(() => {
-		return {
-			// transform: [{ scale: pressed.value ? 1.3 : 1.2 }],
-			// backgroundColor: pressed.value ? '#FEEF86' : '#001972',
-			// // transform: [{ scale: withSpring(1, { duration: 2000 }) }],
-		};
-	})
 
 	return (
 		<>
 			<StatusBar animated={true} backgroundColor="white" hidden={false} />
 			<SafeAreaView style={styles.safeAreaContainer}>
 				<View style={[styles.containerTitle, { width: '95%', height: '7%', alignItems: 'flex-start', justifyContent: 'space-between', left: 2, top: 1, flexDirection: 'row' }]}>
-					<Animated.View style={[buttonAmimatedStyles2, { paddingRight: 20, width: '90%' }]}>
+					<Animated.View style={[{ paddingRight: 20, width: '90%' }]}>
 						<View>
 							<Text style={[styles.headerTitleDate]}>
 								Lunes, 27 Mayo
@@ -321,19 +315,17 @@ const HomeScreen = () => {
 										onPress={() => navigation.navigate('DetailsScreen', { item: item })}
 									>
 										<Animated.View style={[styles.itemContainer, { opacity, transform: [{ scale }] }]} >
-
 											<SharedElement style={{ height: '80%', width: '100%', borderRadius: 20 }} id={item.images[0].id}>
 												<Image
-													style={{ width: width - 26, height: width - 189, borderRadius: 16, bottom: 7, left: 0, top: 0 }}
+													style={{ width: width - 26, height: width - 190, borderRadius: 16, bottom: 0, left: 0, top: 0 }}
 													source={{ uri: item.images[0].uri }}
 													resizeMode='cover'
 												/>
 											</SharedElement>
-
 											<View style={styles.itemDetailsContainer}>
-												<View>
-													<Text numberOfLines={1} style={styles.itemTitle}>{(item.title.length) > 20 ? `${item.title.substring(0, 30)}...` : item.title}</Text>
-													<Text style={styles.itemUser}>{item.userEmail}</Text>
+												<View style={{ backgroundColor: 'transparent', width: '85%', height: '115%' }}>
+													<Text numberOfLines={2} style={styles.itemTitle}>{item.title/*(item.title.length) > 20 ? `${item.title.substring(0, 30)}...` : item.title}*/}</Text>
+													<Text style={styles.itemUser}>{item.createdAt}</Text>
 												</View>
 												<TouchableOpacity onPress={() => null}>
 													<View style={styles.mapIconContainer}>
@@ -353,16 +345,14 @@ const HomeScreen = () => {
 
 				<View style={[styles.lastView]}>
 
-					<TouchableOpacity ><TapGestureHandler onGestureEvent={eventHandler}>
-						<Animated.View style={[styles.addButtonContainer, buttonAmimatedStyles]}>
-							{/* /*onPress={() => navigation.navigate('NewMarker')}*/}
+					<View style={[styles.addButtonContainer]}>
+						<TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('NewMarker')}>
 							<Text style={{ padding: 5, fontSize: 15, fontWeight: 'bold', fontStyle: 'italic', color: 'white' }}>AGREGAR NUEVO REGISTRO</Text>
 							<View style={{ paddingBottom: 1, paddingLeft: 10 }}>
 								<Icon name='plus-circle' type='font-awesome' size={30} color='white' />
 							</View>
-						</Animated.View>
-					</TapGestureHandler>
-					</TouchableOpacity>
+						</TouchableOpacity>
+					</View>
 
 				</View>
 			</SafeAreaView>
@@ -422,14 +412,15 @@ const styles = StyleSheet.create({
 		letterSpacing: 1.2
 	},
 	itemContainer: {
+		top: 3,
 		left: 6,
 		width: '96.5%',
-		height: width - 130/*height / 3.4*/,
+		height: width - 135/*height / 3.4*/,
 		borderColor: 'yellow',
 		borderWidth: 1,
 		borderRadius: 20,
 		marginVertical: MARGIN_VERTICAL,
-		alignItems: 'flex-start',
+		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#rgb(255, 255, 255)',
 		shadowColor: Platform.OS === 'ios' ? 'gray' : 'black',
@@ -449,27 +440,29 @@ const styles = StyleSheet.create({
 	},
 	itemTitle: {
 		left: 10,
+		// width: '95%',
 		fontSize: width < 380 ? 14 : 16,
 		fontWeight: 'bold',
 		fontStyle: 'italic',
 	},
 	itemUser: {
 		left: 10,
-		paddingBottom: 0,
+		top: 0,
+		bottom: 5,
 		fontWeight: 'bold',
 		fontSize: width < 380 ? 14 : 16,
 		color: 'black',
 		opacity: .5
 	},
 	itemDetailsContainer: {
-		top: 0,
+		top: 10,
 		paddingHorizontal: 0,
 		width: '98%',
-		height: '19%',
+		height: '20%',
 		flexDirection: 'row',
 		alignItems: 'flex-end',
 		justifyContent: 'space-between',
-		paddingBottom: 3,
+		marginBottom: 35,
 		borderRadius: 20,
 		backgroundColor: '#rgb(255, 255, 255)'
 	},
@@ -495,6 +488,7 @@ const styles = StyleSheet.create({
 		marginTop: 1,
 		marginBottom: 10,
 		width: '80%',
+		height: '90%',
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',

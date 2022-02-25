@@ -11,16 +11,16 @@ const SignInSchema = Yup.object().shape({
 
 const initialValues = { title: '', description: '' }
 
-const FormNewMarker = ({ photo1, photo2, photo3, setError, setPhoto1, setPhoto2, setPhoto3 }) => {
-	console.log('Formi rendering');
+const FormNewMarker = ({ photo1, photo2, photo3, photo4, setError, setPhoto1, setPhoto2, setPhoto3, setPhoto4 }) => {
 	const helperSubmit = () => {
 		if (photo1) {
 			alert('LOGICA CONTRA BACKEND Y FOTO', photo1)
 			setPhoto1(null)
 			setPhoto2(null)
 			setPhoto3(null)
+			setPhoto4(null)
 		} else {
-			setError('Debe proporcionar al menos una fotografía')
+			setError('Debe proporcionar una fotografía principal')
 		}
 	}
 
@@ -29,11 +29,8 @@ const FormNewMarker = ({ photo1, photo2, photo3, setError, setPhoto1, setPhoto2,
 			initialValues={initialValues}
 			validationSchema={SignInSchema}
 			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2));
-					setSubmitting(false);
-					helperSubmit(values)
-				}, 400);
+				setSubmitting(false);
+				helperSubmit(values)
 				values.title = ''
 				values.description = ''
 			}}
@@ -47,15 +44,12 @@ const FormNewMarker = ({ photo1, photo2, photo3, setError, setPhoto1, setPhoto2,
 				handleSubmit,
 				isSubmitting,
 				isValid,
-				resetForm
 			}) => (
 				<>
 					<View
 						style={[
 							styles.textInput,
 							{
-								justifyContent: 'space-around',
-								flexDirection: 'row',
 								borderColor:
 									errors.title
 										? 'red'
@@ -83,8 +77,6 @@ const FormNewMarker = ({ photo1, photo2, photo3, setError, setPhoto1, setPhoto2,
 						style={[
 							styles.textInput,
 							{
-								justifyContent: 'space-around',
-								flexDirection: 'row',
 								height: 250,
 								borderColor:
 									errors.description && touched.description
@@ -99,11 +91,7 @@ const FormNewMarker = ({ photo1, photo2, photo3, setError, setPhoto1, setPhoto2,
 					>
 						<TextInput
 							onChangeText={handleChange('description')}
-							style={{
-								width: '100%',
-								paddingLeft: 10,
-								textAlignVertical: 'top',
-							}}
+							style={styles.textInputDescription}
 							name='description'
 							placeholder='Ingresa una descripción'
 							value={values.description}
@@ -119,14 +107,7 @@ const FormNewMarker = ({ photo1, photo2, photo3, setError, setPhoto1, setPhoto2,
 							{errors.description}
 						</Text>
 					)}
-					<View
-						style={{
-							alignContent: 'center',
-							justifyContent: 'center',
-							top: 0,
-							bottom: 10
-						}}
-					>
+					<View style={styles.buttonContainer}>
 						<TouchableOpacity
 							style={styles.container}
 							onPress={handleSubmit}
@@ -179,6 +160,8 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 2, height: 5 },
 		elevation: 8,
 		shadowOpacity: 1,
+		justifyContent: 'space-around',
+		flexDirection: 'row',
 	},
 	textError: {
 		paddingTop: 15,
@@ -211,4 +194,15 @@ const styles = StyleSheet.create({
 		color: '#fff',
 		fontWeight: 'bold',
 	},
+	textInputDescription: {
+		width: '100%',
+		paddingLeft: 10,
+		textAlignVertical: 'top',
+	},
+	buttonContainer: {
+		alignContent: 'center',
+		justifyContent: 'center',
+		top: 0,
+		bottom: 10
+	}
 });

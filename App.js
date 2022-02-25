@@ -11,6 +11,7 @@ import { createSharedElementStackNavigator } from 'react-navigation-shared-eleme
 import NewAccount from './components/NewAccount'
 import { StatusBar } from 'expo-status-bar';
 import { LogBox, SafeAreaView } from 'react-native';
+import { MenuProvider } from 'react-native-popup-menu';
 
 LogBox.ignoreLogs(['Remote debugger']);
 
@@ -20,45 +21,49 @@ const Stack = createSharedElementStackNavigator();
 
 export default function App() {
 	return (
+
 		<NavigationContainer>
-			<StatusBar animated={true} backgroundColor="gray" hidden={false} />
-			<SafeAreaView style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : 40 }}>
-				<Stack.Navigator initialRouteName='HomeScreen'>
-					<Stack.Screen
-						name='LoginScreen'
-						component={LoginScreen}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
-						name='NewAccount'
-						component={NewAccount}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
-						name='DetailsScreen'
-						component={Details}
-						options={{ headerShown: false }}
-						sharedElements={(route) => {
-							return [route.params.item.images[0].id]
-						}}
-					/>
-					<Stack.Screen
-						name='NewMarker'
-						component={NewMarker}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
-						name='HomeScreen'
-						component={HomeScreen}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
-						name='Map'
-						component={MapScreen}
-						options={{ headerShown: false }}
-					/>
-				</Stack.Navigator>
-			</SafeAreaView>
+			<MenuProvider>
+				<StatusBar animated={true} backgroundColor="gray" hidden={false} />
+				<SafeAreaView style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : 37 }}>
+					<Stack.Navigator initialRouteName='NewAccount'>
+						<Stack.Screen
+							name='LoginScreen'
+							component={LoginScreen}
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name='NewAccount'
+							component={NewAccount}
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name='DetailsScreen'
+							component={Details}
+							options={{ headerShown: false }}
+							sharedElements={(route) => {
+								return [route.params.item.images[0].id]
+							}}
+						/>
+						<Stack.Screen
+							name='NewMarker'
+							component={NewMarker}
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name='HomeScreen'
+							component={HomeScreen}
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name='Map'
+							component={MapScreen}
+							options={{ headerShown: false }}
+						/>
+					</Stack.Navigator>
+				</SafeAreaView>
+			</MenuProvider>
 		</NavigationContainer>
+
 	);
 }

@@ -16,6 +16,7 @@ import BoxTakePicture from './BoxTakePicture';
 import { Icon } from 'react-native-elements';
 import BoxShowImage from './BoxShowImage';
 import { useNavigation } from '@react-navigation/native';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
 export default function NewMarker() {
 	const [photo1, setPhoto1] = useState(false);
@@ -27,12 +28,14 @@ export default function NewMarker() {
 	const [showCamera3, setShowCamera3] = useState(false);
 	const [photo3, setPhoto3] = useState(null);
 
+	const [showCamera4, setShowCamera4] = useState(false);
+	const [photo4, setPhoto4] = useState(null);
+
 	const [errorNoPhoto, setErrorNoPhoto] = useState(true);
 	const [addMorePictures, setAddMorePictures] = useState(false);
 	const [addMorePicturesAux, setAddMorePicturesAux] = useState(false)
 
 	const [errorNoPhotoSubmit, setErrorNoPhotoSubmit] = useState(false)
-
 	const navigation = useNavigation()
 
 	return (
@@ -42,7 +45,7 @@ export default function NewMarker() {
 			behavior={Platform.OS === 'ios' ? 'padding' : ''}
 			keyboardVerticalOffset={Platform.OS === 'ios' ? -50 : 50}
 		>
-			<StatusBar style='auto' />
+			<StatusBar animated={true} backgroundColor="white" hidden={false} />
 			<SafeAreaView style={styles.containerSafeArea}>
 				{showCamera ? (
 					<CameraContainer
@@ -69,8 +72,23 @@ export default function NewMarker() {
 									CREAR NUEVO MARCADOR
 								</Text>
 							</View>
+							<Menu>
+								<MenuTrigger>
+									<View>
+										<Icon
+											name='users'
+											type='font-awesome'
+											size={25}
+										/>
+									</View>
+								</MenuTrigger>
+								<MenuOptions >
+									<MenuOption style={{ backgroundColor: '#9b9fee', }} onSelect={() => console.log('REMOVE TOKEN FROM APPSTORAGE')}>
+										<Text style={{ color: 'white', padding: 1, alignSelf: 'center', fontWeight: 'bold', fontSize: 18 }}>Salir de la apliación</Text>
+									</MenuOption>
+								</MenuOptions>
+							</Menu>
 						</View>
-
 						<ScrollView
 							scrollsToTop={true}
 							style={styles.scrollView}
@@ -87,7 +105,6 @@ export default function NewMarker() {
 											/>
 										)
 								}
-
 								{
 									photo1 && (
 										<View>
@@ -141,12 +158,25 @@ export default function NewMarker() {
 									)
 								}
 								{
+									(addMorePictures && photo4) && <BoxShowImage setPhoto={setPhoto4} photo={photo4} />
+								}
+								{
+									(addMorePicturesAux && !photo4) && (
+										<BoxTakePicture
+											setShowCamera={setShowCamera4}
+											showCamera={showCamera4}
+											errorNoPhoto={errorNoPhoto}
+										/>
+									)
+								}
+								{
 									showCamera2 && (
 										<Modal animationType='slide' style={styles.modal}>
 											<CameraContainer
 												setPhoto={setPhoto2}
 												setShowCamera={setShowCamera2}
 												setErrorNoPhoto={setErrorNoPhoto}
+												setErrorNoPhotoSubmit={setErrorNoPhotoSubmit}
 											/>
 										</Modal>
 									)
@@ -158,6 +188,19 @@ export default function NewMarker() {
 												setPhoto={setPhoto3}
 												setShowCamera={setShowCamera3}
 												setErrorNoPhoto={setErrorNoPhoto}
+												setErrorNoPhotoSubmit={setErrorNoPhotoSubmit}
+											/>
+										</Modal>
+									)
+								}
+								{
+									showCamera4 && (
+										<Modal animationType='slide' style={styles.modal}>
+											<CameraContainer
+												setPhoto={setPhoto4}
+												setShowCamera={setShowCamera4}
+												setErrorNoPhoto={setErrorNoPhoto}
+												setErrorNoPhotoSubmit={setErrorNoPhotoSubmit}
 											/>
 										</Modal>
 									)
@@ -166,10 +209,12 @@ export default function NewMarker() {
 									photo1={photo1}
 									photo2={photo2}
 									photo3={photo3}
+									photo4={photo4}
 									setError={setErrorNoPhotoSubmit}
 									setPhoto1={setPhoto1}
 									setPhoto2={setPhoto2}
 									setPhoto3={setPhoto3}
+									setPhoto3={setPhoto4}
 								/>
 							</View>
 						</ScrollView>
@@ -201,22 +246,15 @@ const styles = StyleSheet.create({
 	},
 	headerContainer: {
 		flexDirection: 'row',
-		shadowColor: 'blue',
-		shadowRadius: 10,
-		shadowOffset: { width: -10, height: -10 },
-		elevation: 35,
-		shadowOpacity: 1,
 		width: '95%',
-		overflow: 'hidden',
 		height: 50,
-		borderRadius: 15,
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		// borderWidth: 1
 	},
 	containerArrowIcon: {
-		paddingRight: 10,
-		paddingLeft: 15,
+		paddingRight: 2,
+		paddingLeft: 10,
 	},
 	containerTitle: {
 		height: 30,
