@@ -11,7 +11,7 @@ import {
     Alert,
 } from 'react-native';
 import { TouchableWithoutFeedback, Animated } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import SvgImage from '../components/SvgImage';
 import { StatusBar } from 'expo-status-bar'
 import FormNewAccount from '../components/FormNewAccount'
@@ -19,6 +19,7 @@ import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable'
 import * as ImagePicker from 'expo-image-picker'
+import Toast from 'react-native-toast-message';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -28,6 +29,7 @@ const NewAccount = () => {
     const [opacityView] = useState(new Animated.Value(0));
     // const [logo] = useState(new Animated.ValueXY({ x: 170, y: 150 }));
     const [thumbnail, setThumbnail] = useState(null)
+    const [showToast, setShowToast] = useState(false)
     const navigation = useNavigation()
 
     const pickFromGallery = async () => {
@@ -86,9 +88,9 @@ const NewAccount = () => {
     const keyboardDidShow = () => {
         Animated.spring(topPicture, {
             toValue: 20,
-            duration: 10,
-            speed: 10,
-            bounciness: 10,
+            duration: 1000,
+            speed: 4,
+            bounciness: 20,
             useNativeDriver: false,
         }).start();
     };
@@ -97,12 +99,24 @@ const NewAccount = () => {
 
         Animated.spring(topPicture, {
             toValue: width * .09,
-            duration: 10,
-            speed: 10,
+            duration: 1000,
+            speed: 4,
             useNativeDriver: false,
-            bounciness: 10,
+            bounciness: 20,
         }).start();
     };
+
+    const showTooast = () => {
+        Toast.show({
+            type: 'success',
+            text1: 'Cuenta creada',
+            text2: 'Se creo la cuenta con exito'
+        })
+        setTimeout(() => {
+            navigation.navigate('HomeScreen')
+        }, 2000)
+
+    }
 
     return (
 
@@ -112,6 +126,8 @@ const NewAccount = () => {
             keyboardVerticalOffset={Platform.OS === 'ios' ? -85 : -80}
         >
             <StatusBar animated={true} backgroundColor="pink" hidden={false} opacity={1} />
+
+
             <TouchableWithoutFeedback
                 style={{ flex: 1 }}
                 onPress={Keyboard.dismiss}
@@ -120,6 +136,18 @@ const NewAccount = () => {
                     <View style={styles.containerSVG}>
                         <SvgImage />
                     </View>
+                    {/* {
+                        showToast ? Toast.show({
+                            type: 'success',
+                            text1: 'Cuenta creada',
+                            text2: 'Se creo la cuenta con exito'
+                        }) : null
+                    } */}
+                    <Toast
+                        // ref={(ref) => { Toast.setRef(ref) }}
+                        position='top'
+                        topOffset={150}
+                    />
                     <Animated.View style={[styles.containerThumbnail, {
                         top: topPicture,
                         backgroundColor: thumbnail ? 'transparent' : 'white',
@@ -166,7 +194,7 @@ const NewAccount = () => {
                         <Text style={styles.subTitle}>
                             Crea una nueva cuenta
                         </Text>
-                        <FormNewAccount />
+                        <FormNewAccount setShowToast={setShowToast} showTooast={showTooast} />
                         <View
                             style={{
                                 flexDirection: 'column',

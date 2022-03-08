@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import { Icon } from 'react-native-elements';
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 // import { MotiView } from 'moti';
 
 const SignInSchema = Yup.object().shape({
@@ -22,21 +23,22 @@ const SignInSchema = Yup.object().shape({
     confirmPassword: Yup.string().required('Por favor confirme su contraseña').oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden'),
 });
 
-const FormLogin = () => {
+const FormNewAccount = ({ setShowToast, showTooast }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center', height: 350, backgroundColor: '#DEE9F7' }}>
             <Formik
                 initialValues={{ email: '', password: '', confirmPassword: '' }}
                 validationSchema={SignInSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
+                    showTooast()
+                    values.email = '',
+                        values.confirmPassword = '',
+                        values.password = ''
+                    setSubmitting(false);
+                    // setTimeout(() => {
+                    // alert(JSON.stringify(values, null, 2));
                 }}
             >
                 {({
@@ -266,7 +268,7 @@ const FormLogin = () => {
     );
 };
 
-export default FormLogin;
+export default FormNewAccount;
 
 const styles = StyleSheet.create({
     textInput: {
