@@ -1,14 +1,25 @@
-import { Text, View, SafeAreaView, StyleSheet, Dimensions, Image, TouchableOpacity, Platform, TouchableWithoutFeedback, Animated } from 'react-native';
+import {
+	Text,
+	View,
+	SafeAreaView,
+	StyleSheet,
+	Dimensions,
+	Image,
+	TouchableOpacity,
+	Platform,
+	TouchableWithoutFeedback,
+	Animated,
+} from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { SharedElement } from 'react-navigation-shared-element';
 import { StatusBar } from 'expo-status-bar';
 
-const { width, height } = Dimensions.get('screen')
-const TOP = `${Platform.OS === 'ios' ? (height / 200) : (height / 200)}%`
-const HEIGHT_IMAGE_POR = width - 105
-const MARGIN_VERTICAL = 15
+const { width, height } = Dimensions.get('screen');
+const TOP = `${Platform.OS === 'ios' ? height / 200 : height / 200}%`;
+const HEIGHT_IMAGE_POR = width - 105;
+const MARGIN_VERTICAL = 15;
 const DATA = [
 	{
 		id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -16,44 +27,43 @@ const DATA = [
 		images: [
 			{
 				id: 'asdaswerr',
-				uri: 'https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2017/01/09142320/Perros-callejeros-mexico-3.jpg'
+				uri: 'https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2017/01/09142320/Perros-callejeros-mexico-3.jpg',
 			},
 			{
 				id: 'asdasdawwwwww',
-				uri: 'https://elcomercio.pe/resizer/o1iGvdjwZ7uyfm32ap0mZqVyY4Q=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/JJIAPKY5HFEI5DFMOGVYNXCBCE.jpg'
+				uri: 'https://elcomercio.pe/resizer/o1iGvdjwZ7uyfm32ap0mZqVyY4Q=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/JJIAPKY5HFEI5DFMOGVYNXCBCE.jpg',
 			},
 			{
 				id: 'wewewewewewe',
-				uri: 'https://cdn.bioguia.com/embed/bd4b2ce0a58ab8240dde2dc7f43c31b61524336236/Holanda_se_convierte_en_el_primer_pais_sin_perros_abandonados_sin_sacrificarlos?imagick=1&size=500'
-			}
+				uri: 'https://cdn.bioguia.com/embed/bd4b2ce0a58ab8240dde2dc7f43c31b61524336236/Holanda_se_convierte_en_el_primer_pais_sin_perros_abandonados_sin_sacrificarlos?imagick=1&size=500',
+			},
 		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '10-12-2021'
+		createdAt: '10-12-2021',
 	},
 	{
 		id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
 		title: 'Perrita abandonada en zona la comercial',
-		images:
-			[
-				{
-					id: 'wewe3333',
-					uri: 'https://cdn2.salud180.com/sites/default/files/field/image/2021/07/enfermedades-perritos-callejeros-principal.jpg'
-				},
-				{
-					id: '22222222',
-					uri: 'https://www.ayayay.tv/wp-content/uploads/2016/07/portada-perrocallejero.jpg'
-				},
-				{
-					id: 'jsdskjadjaks',
-					uri: 'https://depor.com/resizer/co7DeTR7_4PxAxRe2k6AvY9VAyU=/980x0/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/4JDN7I76QVGCNGTOG73J53XHNE.jpg'
-				}
-			],
+		images: [
+			{
+				id: 'wewe3333',
+				uri: 'https://cdn2.salud180.com/sites/default/files/field/image/2021/07/enfermedades-perritos-callejeros-principal.jpg',
+			},
+			{
+				id: '22222222',
+				uri: 'https://www.ayayay.tv/wp-content/uploads/2016/07/portada-perrocallejero.jpg',
+			},
+			{
+				id: 'jsdskjadjaks',
+				uri: 'https://depor.com/resizer/co7DeTR7_4PxAxRe2k6AvY9VAyU=/980x0/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/4JDN7I76QVGCNGTOG73J53XHNE.jpg',
+			},
+		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '12-12-2021'
+		createdAt: '12-12-2021',
 	},
 	{
 		id: '58694a0f-3da1-471f-bd96-145571e29d333372',
@@ -61,21 +71,21 @@ const DATA = [
 		images: [
 			{
 				id: 'asdasdasd',
-				uri: 'https://estaticos.muyinteresante.es/media/cache/400x300_thumb/uploads/images/article/5cbf27e45bafe8e7563c986a/gatitos-abandonados-calle.jpg'
+				uri: 'https://estaticos.muyinteresante.es/media/cache/400x300_thumb/uploads/images/article/5cbf27e45bafe8e7563c986a/gatitos-abandonados-calle.jpg',
 			},
 			{
 				id: 'adasdas',
-				uri: 'https://soyungato.com/wp-content/uploads/2020/04/minino-abandonado.jpg'
+				uri: 'https://soyungato.com/wp-content/uploads/2020/04/minino-abandonado.jpg',
 			},
 			{
 				id: 'aadasdasdasdas',
-				uri: 'https://img.huffingtonpost.com/asset/5c8b62212500000d04ca87a5.jpeg?ops=scalefit_630_noupscale'
-			}
+				uri: 'https://img.huffingtonpost.com/asset/5c8b62212500000d04ca87a5.jpeg?ops=scalefit_630_noupscale',
+			},
 		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '12-01-2022'
+		createdAt: '12-01-2022',
 	},
 	{
 		id: '58694a0f-3da1-471f-bd96-145571e29d72',
@@ -83,21 +93,21 @@ const DATA = [
 		images: [
 			{
 				id: '33333333',
-				uri: 'https://vetmarketportal.com.ar/uploads/noticias/2/20201028235310_perro_abandonado.jpg'
+				uri: 'https://vetmarketportal.com.ar/uploads/noticias/2/20201028235310_perro_abandonado.jpg',
 			},
 			{
 				id: '232424242',
-				uri: 'https://d8s293fyljwh4.cloudfront.net/petitions/images/165844/horizontal/calle.jpg?1472046270'
+				uri: 'https://d8s293fyljwh4.cloudfront.net/petitions/images/165844/horizontal/calle.jpg?1472046270',
 			},
 			{
 				id: '23232323232111',
-				uri: 'https://noticiasambientales.com/wp-content/uploads/2019/11/holanda_animales_callejeros_4865864584658465864584.jpg'
-			}
+				uri: 'https://noticiasambientales.com/wp-content/uploads/2019/11/holanda_animales_callejeros_4865864584658465864584.jpg',
+			},
 		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '03-12-2021'
+		createdAt: '03-12-2021',
 	},
 	{
 		id: '58694a0f-3da1-471f-bd96-145571e29d72232',
@@ -105,120 +115,116 @@ const DATA = [
 		images: [
 			{
 				id: '3434343534',
-				uri: 'https://st4.depositphotos.com/1010683/20321/i/600/depositphotos_203218232-stock-photo-woman-hand-touching-on-street.jpg'
+				uri: 'https://st4.depositphotos.com/1010683/20321/i/600/depositphotos_203218232-stock-photo-woman-hand-touching-on-street.jpg',
 			},
 			{
 				id: 'askdkasjdaskjdasdas',
-				uri: 'https://www.zoorprendente.com/wp-content/uploads/2019/12/kenya-1-2-750x750.jpg'
+				uri: 'https://www.zoorprendente.com/wp-content/uploads/2019/12/kenya-1-2-750x750.jpg',
 			},
 			{
 				id: '383h593933hj93',
-				uri: 'https://1.bp.blogspot.com/-3IEFiJlxR4I/XYP1ucC2k6I/AAAAAAAASQ8/-M8H36pmJEEznraZIy8KCOvxzkCAOpjVACLcBGAsYHQ/s1600/Gato%2Babandonado%2Ben%2Bla%2Besquina%2Bde%2Bla%2Bcalle%2Bcon%2Bsus%2Bcosas.jpg'
-			}
+				uri: 'https://1.bp.blogspot.com/-3IEFiJlxR4I/XYP1ucC2k6I/AAAAAAAASQ8/-M8H36pmJEEznraZIy8KCOvxzkCAOpjVACLcBGAsYHQ/s1600/Gato%2Babandonado%2Ben%2Bla%2Besquina%2Bde%2Bla%2Bcalle%2Bcon%2Bsus%2Bcosas.jpg',
+			},
 		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '04-02-2022'
+		createdAt: '04-02-2022',
 	},
 	{
 		id: '58694a0f-3da1-471f-bd96-145571e29sssd72232',
 		title: 'LAST Itemasdasdasdasdasdasdasdasdasdasdasdasdasdasdas',
 		images: [
-
 			{
 				id: '3i333h3h3h',
-				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg'
+				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg',
 			},
 			{
 				id: 'asdajshdasdas',
-				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg'
-			}
-			,
+				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg',
+			},
 			{
 				id: '2nasd333',
-				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635'
-			}],
+				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635',
+			},
+		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '10-01-2022'
+		createdAt: '10-01-2022',
 	},
 	{
 		id: '58694a0f-3daqwqwqwq1-471f-bd96-145571e29sssd72232',
 		title: 'LAST Itemasdasdasdasdasdasdasdasdasdasdasdasdasdasdas',
 		images: [
-
 			{
 				id: '3i333hqwqwqwqw3h3h',
-				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg'
+				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg',
 			},
 			{
 				id: 'asdajsqqqqqhdasdas',
-				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg'
-			}
-			,
+				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg',
+			},
 			{
 				id: '2naqwqwqwsd333',
-				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635'
-			}],
+				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635',
+			},
+		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '10-01-2022'
+		createdAt: '10-01-2022',
 	},
 	{
 		id: '58694a0qwqwqwqwf-3da1-471f-bd96-145571e29sssd72232',
 		title: 'LAST Itemasdasdasdasdasdasdasdasdasdasdasdasdasdasdas',
 		images: [
-
 			{
 				id: '3i3qqwqwq33h3h3h',
-				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg'
+				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg',
 			},
 			{
 				id: 'asdajsddsdwwwhdasdas',
-				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg'
-			}
-			,
+				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg',
+			},
 			{
 				id: '2nassdssssd333',
-				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635'
-			}],
+				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635',
+			},
+		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '10-01-2022'
+		createdAt: '10-01-2022',
 	},
 	{
 		id: '58694a0f-3da1sdsdsd-471f-bd96-145571e29sssd72232',
 		title: 'LAST Itemasdasdasdasdasdasdasdasdasdasdasdasdasdasdas',
 		images: [
-
 			{
 				id: '3i333sdsdsdsh3h3h',
-				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg'
+				uri: 'https://www.lavoz.com.ar/resizer/yTPjAhgCdtnrR3uTUvQenl4xPvE=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/PMQZYSEPNNENJCXH6QQ42IJIGM.jpg',
 			},
 			{
 				id: 'asdajdsdsdshdasdas',
-				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg'
-			}
-			,
+				uri: 'https://www.lavoz.com.ar/resizer/_DMSW2KznJdzrY_aC7itb9Uxkr4=/1023x682/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/6FES2YE25RCJZGHWK6NCSYTQHY.jpg',
+			},
 			{
 				id: '2nasdssss333',
-				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635'
-			}],
+				uri: 'https://www.ecestaticos.com/imagestatic/clipping/6d7/8b3/6d78b30ed2aa5a4d15513d5734114f1e/el-dueno-de-un-perro-lo-tiene-abandonado-y-sus-vecinos-le-construyen-una-caseta.jpg?mtime=1622465635',
+			},
+		],
 		lat: '',
 		long: '',
 		userEmail: 'chelobat@gmail.com',
-		createdAt: '10-01-2022'
-	}
+		createdAt: '10-01-2022',
+	},
 ];
-const ITEM_SIZE = HEIGHT_IMAGE_POR
+const ITEM_SIZE = HEIGHT_IMAGE_POR;
 
-const HomeScreen = () => {
+export const HomeScreen = () => {
 	const navigation = useNavigation();
-	const scrollY = useRef(new Animated.Value(0)).current
+	const scrollY = useRef(new Animated.Value(0)).current;
 	// const pressed = useSharedValue(-120);
 
 	// const startAnimation = () => {
@@ -232,7 +238,6 @@ const HomeScreen = () => {
 	// 		transform: [{ translateX: pressed.value }],
 	// 	};
 	// })
-
 
 	// const scrollY = useSharedValue(0);
 	// const scrollHandler = useAnimatedScrollHandler({
@@ -250,14 +255,26 @@ const HomeScreen = () => {
 
 	useEffect(() => {
 		// startAknimation()
-	}, [])
-
+	}, []);
 
 	return (
 		<>
-			<StatusBar animated={true} backgroundColor="white" hidden={false} />
+			<StatusBar animated={true} backgroundColor='white' hidden={false} />
 			<SafeAreaView style={styles.safeAreaContainer}>
-				<View style={[styles.containerTitle, { width: '95%', height: '7%', alignItems: 'flex-start', justifyContent: 'space-between', left: 2, top: 1, flexDirection: 'row' }]}>
+				<View
+					style={[
+						styles.containerTitle,
+						{
+							width: '95%',
+							height: '7%',
+							alignItems: 'flex-start',
+							justifyContent: 'space-between',
+							left: 2,
+							top: 1,
+							flexDirection: 'row',
+						},
+					]}
+				>
 					<Animated.View style={[{ paddingRight: 20, width: '90%' }]}>
 						<View>
 							<Text style={[styles.headerTitleDate]}>
@@ -265,7 +282,9 @@ const HomeScreen = () => {
 							</Text>
 						</View>
 						<View>
-							<Text style={[styles.headerTitle, { height: '90%' }]}>
+							<Text
+								style={[styles.headerTitle, { height: '90%' }]}
+							>
 								Últimos Registros
 							</Text>
 						</View>
@@ -275,13 +294,17 @@ const HomeScreen = () => {
 					</View>
 				</View>
 
-				<View
-					style={styles.flatListContainer}
-				>
+				<View style={styles.flatListContainer}>
 					<Animated.FlatList
 						onScroll={Animated.event(
-							[{ nativeEvent: { contentOffset: { y: scrollY } } }],
-							{ useNativeDriver: true }
+							[
+								{
+									nativeEvent: {
+										contentOffset: { y: scrollY },
+									},
+								},
+							],
+							{ useNativeDriver: true },
 						)}
 						style={{ width: width - 10 }}
 						showsVerticalScrollIndicator={false}
@@ -290,77 +313,152 @@ const HomeScreen = () => {
 							const inputRange = [
 								-1,
 								0,
-								ITEM_SIZE * (index),
+								ITEM_SIZE * index,
 								ITEM_SIZE * (index + 2),
-							]
+							];
 							const opacityInputRange = [
 								-1,
 								0,
-								ITEM_SIZE * (index),
+								ITEM_SIZE * index,
 								ITEM_SIZE * (index + 1),
-							]
+							];
 
 							const scale = scrollY.interpolate({
 								inputRange,
-								outputRange: [1, 1, 1, 0]
-							})
+								outputRange: [1, 1, 1, 0],
+							});
 							const opacity = scrollY.interpolate({
 								inputRange: opacityInputRange,
-								outputRange: [1, 1, 1, 0]
-							})
+								outputRange: [1, 1, 1, 0],
+							});
 
 							return (
 								<>
 									<TouchableWithoutFeedback
-										onPress={() => navigation.navigate('DetailsScreen', { item: item })}
+										onPress={() =>
+											navigation.navigate(
+												'DetailsScreen',
+												{ item: item },
+											)
+										}
 									>
-										<Animated.View style={[styles.itemContainer, { opacity, transform: [{ scale }] }]} >
-											<SharedElement style={{ height: '80%', width: '100%', borderRadius: 20 }} id={item.images[0].id}>
+										<Animated.View
+											style={[
+												styles.itemContainer,
+												{
+													opacity,
+													transform: [{ scale }],
+												},
+											]}
+										>
+											<SharedElement
+												style={{
+													height: '80%',
+													width: '100%',
+													borderRadius: 20,
+												}}
+												id={item.images[0].id}
+											>
 												<Image
-													style={{ width: width - 26, height: width - 190, borderRadius: 16, bottom: 0, left: 0, top: 0 }}
-													source={{ uri: item.images[0].uri }}
+													style={{
+														width: width - 26,
+														height: width - 190,
+														borderRadius: 16,
+														bottom: 0,
+														left: 0,
+														top: 0,
+													}}
+													source={{
+														uri: item.images[0].uri,
+													}}
 													resizeMode='cover'
 												/>
 											</SharedElement>
-											<View style={styles.itemDetailsContainer}>
-												<View style={{ backgroundColor: 'transparent', width: '85%', height: '115%' }}>
-													<Text numberOfLines={2} style={styles.itemTitle}>{item.title/*(item.title.length) > 20 ? `${item.title.substring(0, 30)}...` : item.title}*/}</Text>
-													<Text style={styles.itemUser}>{item.createdAt}</Text>
+											<View
+												style={
+													styles.itemDetailsContainer
+												}
+											>
+												<View
+													style={{
+														backgroundColor:
+															'transparent',
+														width: '85%',
+														height: '115%',
+													}}
+												>
+													<Text
+														numberOfLines={2}
+														style={styles.itemTitle}
+													>
+														{
+															item.title /*(item.title.length) > 20 ? `${item.title.substring(0, 30)}...` : item.title}*/
+														}
+													</Text>
+													<Text
+														style={styles.itemUser}
+													>
+														{item.createdAt}
+													</Text>
 												</View>
-												<TouchableOpacity onPress={() => null}>
-													<View style={styles.mapIconContainer}>
-														<Icon name='map-marker' type='font-awesome' size={37} color='red' />
+												<TouchableOpacity
+													onPress={() => null}
+												>
+													<View
+														style={
+															styles.mapIconContainer
+														}
+													>
+														<Icon
+															name='map-marker'
+															type='font-awesome'
+															size={37}
+															color='red'
+														/>
 													</View>
 												</TouchableOpacity>
 											</View>
 										</Animated.View>
 									</TouchableWithoutFeedback>
-
 								</>
-							)
+							);
 						}}
-						keyExtractor={item => item.id}
+						keyExtractor={(item) => item.id}
 					/>
 				</View>
 
 				<View style={[styles.lastView]}>
-
 					<View style={[styles.addButtonContainer]}>
-						<TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('NewMarker')}>
-							<Text style={{ padding: 5, fontSize: 15, fontWeight: 'bold', fontStyle: 'italic', color: 'white' }}>AGREGAR NUEVO REGISTRO</Text>
+						<TouchableOpacity
+							style={{ flexDirection: 'row' }}
+							onPress={() => navigation.navigate('NewMarker')}
+						>
+							<Text
+								style={{
+									padding: 5,
+									fontSize: 15,
+									fontWeight: 'bold',
+									fontStyle: 'italic',
+									color: 'white',
+								}}
+							>
+								AGREGAR NUEVO REGISTRO
+							</Text>
 							<View style={{ paddingBottom: 1, paddingLeft: 10 }}>
-								<Icon name='plus-circle' type='font-awesome' size={30} color='white' />
+								<Icon
+									name='plus-circle'
+									type='font-awesome'
+									size={30}
+									color='white'
+								/>
 							</View>
 						</TouchableOpacity>
 					</View>
-
 				</View>
 			</SafeAreaView>
 		</>
 	);
 };
-
-export default HomeScreen;
 
 const styles = StyleSheet.create({
 	safeAreaContainer: {
@@ -370,7 +468,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '100%',
 		alignItems: 'center',
-		justifyContent: 'flex-start'
+		justifyContent: 'flex-start',
 	},
 	headerContainer: {
 		flexDirection: 'row',
@@ -388,7 +486,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		top: 5,
 		borderColor: 'yellow',
-		borderWidth: 0.5
+		borderWidth: 0.5,
 	},
 	flatListContainer: {
 		width: width,
@@ -396,26 +494,26 @@ const styles = StyleSheet.create({
 		height: '81%',
 		backgroundColor: '#rgb(255, 255, 255)',
 		alignItems: 'center',
-		paddingBottom: 0
+		paddingBottom: 0,
 	},
 	containerTitle: {
 		height: 35,
 		width: '80%',
 		alignItems: 'flex-start',
 		justifyContent: 'flex-end',
-		backgroundColor: '#rgb(255, 255, 255)'
+		backgroundColor: '#rgb(255, 255, 255)',
 	},
 	headerTitle: {
 		fontWeight: 'bold',
 		fontSize: 25,
 		// fontStyle: '',
-		letterSpacing: 1.2
+		letterSpacing: 1.2,
 	},
 	itemContainer: {
 		top: 3,
 		left: 6,
 		width: '96.5%',
-		height: width - 135/*height / 3.4*/,
+		height: width - 135 /*height / 3.4*/,
 		borderColor: 'yellow',
 		borderWidth: 1,
 		borderRadius: 20,
@@ -452,7 +550,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		fontSize: width < 380 ? 14 : 16,
 		color: 'black',
-		opacity: .5
+		opacity: 0.5,
 	},
 	itemDetailsContainer: {
 		top: 10,
@@ -464,7 +562,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		marginBottom: 35,
 		borderRadius: 20,
-		backgroundColor: '#rgb(255, 255, 255)'
+		backgroundColor: '#rgb(255, 255, 255)',
 	},
 	mapIconContainer: {
 		flex: 1,
@@ -473,7 +571,7 @@ const styles = StyleSheet.create({
 		right: 5,
 		width: '100%',
 		height: '90%',
-		backgroundColor: 'transparent'
+		backgroundColor: 'transparent',
 	},
 	iconPictureContainer: {
 		width: 50,
@@ -482,7 +580,7 @@ const styles = StyleSheet.create({
 		right: 4,
 		top: 5,
 		borderRadius: 50 / 2,
-		backgroundColor: 'white'
+		backgroundColor: 'white',
 	},
 	addButtonContainer: {
 		marginTop: 1,
@@ -506,7 +604,7 @@ const styles = StyleSheet.create({
 	headerTitleDate: {
 		fontSize: 15,
 		fontWeight: 'bold',
-		opacity: .5,
-		padding: 1
-	}
-})
+		opacity: 0.5,
+		padding: 1,
+	},
+});

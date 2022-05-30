@@ -16,7 +16,12 @@ import BoxTakePicture from './BoxTakePicture';
 import { Icon } from 'react-native-elements';
 import BoxShowImage from './BoxShowImage';
 import { useNavigation } from '@react-navigation/native';
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import {
+	Menu,
+	MenuOption,
+	MenuOptions,
+	MenuTrigger,
+} from 'react-native-popup-menu';
 
 export default function NewMarker() {
 	const [photo1, setPhoto1] = useState(false);
@@ -33,10 +38,10 @@ export default function NewMarker() {
 
 	const [errorNoPhoto, setErrorNoPhoto] = useState(true);
 	const [addMorePictures, setAddMorePictures] = useState(false);
-	const [addMorePicturesAux, setAddMorePicturesAux] = useState(false)
+	const [addMorePicturesAux, setAddMorePicturesAux] = useState(false);
 
-	const [errorNoPhotoSubmit, setErrorNoPhotoSubmit] = useState(false)
-	const navigation = useNavigation()
+	const [errorNoPhotoSubmit, setErrorNoPhotoSubmit] = useState(false);
+	const navigation = useNavigation();
 
 	return (
 		<KeyboardAvoidingView
@@ -45,7 +50,7 @@ export default function NewMarker() {
 			behavior={Platform.OS === 'ios' ? 'padding' : ''}
 			keyboardVerticalOffset={Platform.OS === 'ios' ? -50 : 50}
 		>
-			<StatusBar animated={true} backgroundColor="white" hidden={false} />
+			<StatusBar animated={true} backgroundColor='white' hidden={false} />
 			<SafeAreaView style={styles.containerSafeArea}>
 				{showCamera ? (
 					<CameraContainer
@@ -57,7 +62,9 @@ export default function NewMarker() {
 				) : (
 					<View style={styles.container}>
 						<View style={styles.headerContainer}>
-							<TouchableOpacity onPress={() => navigation.goBack('HomeScreen')}>
+							<TouchableOpacity
+								onPress={() => navigation.goBack('HomeScreen')}
+							>
 								<View style={styles.containerArrowIcon}>
 									<Icon
 										name='arrow-left'
@@ -82,9 +89,26 @@ export default function NewMarker() {
 										/>
 									</View>
 								</MenuTrigger>
-								<MenuOptions >
-									<MenuOption style={{ backgroundColor: '#9b9fee', }} onSelect={() => console.log('REMOVE TOKEN FROM APPSTORAGE')}>
-										<Text style={{ color: 'white', padding: 1, alignSelf: 'center', fontWeight: 'bold', fontSize: 18 }}>Salir de la apliación</Text>
+								<MenuOptions>
+									<MenuOption
+										style={{ backgroundColor: '#9b9fee' }}
+										onSelect={() =>
+											console.log(
+												'REMOVE TOKEN FROM APPSTORAGE',
+											)
+										}
+									>
+										<Text
+											style={{
+												color: 'white',
+												padding: 1,
+												alignSelf: 'center',
+												fontWeight: 'bold',
+												fontSize: 18,
+											}}
+										>
+											Salir de la apliación
+										</Text>
 									</MenuOption>
 								</MenuOptions>
 							</Menu>
@@ -95,116 +119,142 @@ export default function NewMarker() {
 							bounces={false}
 						>
 							<View style={styles.containerOfScrollView}>
-								{
-									photo1 ? <BoxShowImage setPhoto={setPhoto1} photo={photo1} />
-										: (
-											<BoxTakePicture
-												setShowCamera={setShowCamera}
-												showCamera={showCamera}
-												errorNoPhoto={errorNoPhoto}
-											/>
-										)
-								}
-								{
-									photo1 && (
-										<View>
-											<TouchableOpacity
-												style={{ display: addMorePictures ? 'none' : null }}
-												disabled={addMorePictures}
-												onPress={() => {
-													setAddMorePicturesAux(true)
-													setAddMorePictures(true)
-												}}
+								{photo1 ? (
+									<BoxShowImage
+										setPhoto={setPhoto1}
+										photo={photo1}
+									/>
+								) : (
+									<BoxTakePicture
+										setShowCamera={setShowCamera}
+										showCamera={showCamera}
+										errorNoPhoto={errorNoPhoto}
+									/>
+								)}
+								{photo1 && (
+									<View>
+										<TouchableOpacity
+											style={{
+												display: addMorePictures
+													? 'none'
+													: null,
+											}}
+											disabled={addMorePictures}
+											onPress={() => {
+												setAddMorePicturesAux(true);
+												setAddMorePictures(true);
+											}}
+										>
+											<View
+												style={{ flexDirection: 'row' }}
 											>
-												<View style={{ flexDirection: 'row' }}>
-													<Text style={styles.addMore}>AGREGAR FOTOS</Text>
-													<Icon
-														style={{ padding: 5, paddingTop: 8, paddingLeft: 10 }}
-														name='plus'
-														color='black'
-														type='font-awesome'
-														size={22}
-													/>
-												</View>
-											</TouchableOpacity>
-										</View>
-									)
-								}
-								{
-									(errorNoPhotoSubmit) && <Text style={styles.textError}>{errorNoPhotoSubmit}</Text>
-								}
-								{
-									(addMorePictures && photo2) && <BoxShowImage setPhoto={setPhoto2} photo={photo2} />
-								}
-								{
-									(addMorePicturesAux && !photo2) && (
-										<BoxTakePicture
+												<Text style={styles.addMore}>
+													AGREGAR FOTOS
+												</Text>
+												<Icon
+													style={{
+														padding: 5,
+														paddingTop: 8,
+														paddingLeft: 10,
+													}}
+													name='plus'
+													color='black'
+													type='font-awesome'
+													size={22}
+												/>
+											</View>
+										</TouchableOpacity>
+									</View>
+								)}
+								{errorNoPhotoSubmit && (
+									<Text style={styles.textError}>
+										{errorNoPhotoSubmit}
+									</Text>
+								)}
+								{addMorePictures && photo2 && (
+									<BoxShowImage
+										setPhoto={setPhoto2}
+										photo={photo2}
+									/>
+								)}
+								{addMorePicturesAux && !photo2 && (
+									<BoxTakePicture
+										setShowCamera={setShowCamera2}
+										showCamera={showCamera2}
+										errorNoPhoto={errorNoPhoto}
+									/>
+								)}
+								{addMorePictures && photo3 && (
+									<BoxShowImage
+										setPhoto={setPhoto3}
+										photo={photo3}
+									/>
+								)}
+								{addMorePicturesAux && !photo3 && (
+									<BoxTakePicture
+										setShowCamera={setShowCamera3}
+										showCamera={showCamera3}
+										errorNoPhoto={errorNoPhoto}
+									/>
+								)}
+								{addMorePictures && photo4 && (
+									<BoxShowImage
+										setPhoto={setPhoto4}
+										photo={photo4}
+									/>
+								)}
+								{addMorePicturesAux && !photo4 && (
+									<BoxTakePicture
+										setShowCamera={setShowCamera4}
+										showCamera={showCamera4}
+										errorNoPhoto={errorNoPhoto}
+									/>
+								)}
+								{showCamera2 && (
+									<Modal
+										animationType='slide'
+										style={styles.modal}
+									>
+										<CameraContainer
+											setPhoto={setPhoto2}
 											setShowCamera={setShowCamera2}
-											showCamera={showCamera2}
-											errorNoPhoto={errorNoPhoto}
+											setErrorNoPhoto={setErrorNoPhoto}
+											setErrorNoPhotoSubmit={
+												setErrorNoPhotoSubmit
+											}
 										/>
-									)
-								}
-								{
-									(addMorePictures && photo3) && <BoxShowImage setPhoto={setPhoto3} photo={photo3} />
-								}
-								{
-									(addMorePicturesAux && !photo3) && (
-										<BoxTakePicture
+									</Modal>
+								)}
+								{showCamera3 && (
+									<Modal
+										animationType='slide'
+										style={styles.modal}
+									>
+										<CameraContainer
+											setPhoto={setPhoto3}
 											setShowCamera={setShowCamera3}
-											showCamera={showCamera3}
-											errorNoPhoto={errorNoPhoto}
+											setErrorNoPhoto={setErrorNoPhoto}
+											setErrorNoPhotoSubmit={
+												setErrorNoPhotoSubmit
+											}
 										/>
-									)
-								}
-								{
-									(addMorePictures && photo4) && <BoxShowImage setPhoto={setPhoto4} photo={photo4} />
-								}
-								{
-									(addMorePicturesAux && !photo4) && (
-										<BoxTakePicture
+									</Modal>
+								)}
+								{showCamera4 && (
+									<Modal
+										animationType='slide'
+										style={styles.modal}
+									>
+										<CameraContainer
+											setPhoto={setPhoto4}
 											setShowCamera={setShowCamera4}
-											showCamera={showCamera4}
-											errorNoPhoto={errorNoPhoto}
+											setErrorNoPhoto={setErrorNoPhoto}
+											setErrorNoPhotoSubmit={
+												setErrorNoPhotoSubmit
+											}
 										/>
-									)
-								}
-								{
-									showCamera2 && (
-										<Modal animationType='slide' style={styles.modal}>
-											<CameraContainer
-												setPhoto={setPhoto2}
-												setShowCamera={setShowCamera2}
-												setErrorNoPhoto={setErrorNoPhoto}
-												setErrorNoPhotoSubmit={setErrorNoPhotoSubmit}
-											/>
-										</Modal>
-									)
-								}
-								{
-									showCamera3 && (
-										<Modal animationType='slide' style={styles.modal}>
-											<CameraContainer
-												setPhoto={setPhoto3}
-												setShowCamera={setShowCamera3}
-												setErrorNoPhoto={setErrorNoPhoto}
-												setErrorNoPhotoSubmit={setErrorNoPhotoSubmit}
-											/>
-										</Modal>
-									)
-								}
-								{
-									showCamera4 && (
-										<Modal animationType='slide' style={styles.modal}>
-											<CameraContainer
-												setPhoto={setPhoto4}
-												setShowCamera={setShowCamera4}
-												setErrorNoPhoto={setErrorNoPhoto}
-												setErrorNoPhotoSubmit={setErrorNoPhotoSubmit}
-											/>
-										</Modal>
-									)
-								}
+									</Modal>
+								)}
 								<FormNewMarker
 									photo1={photo1}
 									photo2={photo2}
@@ -214,17 +264,14 @@ export default function NewMarker() {
 									setPhoto1={setPhoto1}
 									setPhoto2={setPhoto2}
 									setPhoto3={setPhoto3}
-									setPhoto3={setPhoto4}
+									setPhoto4={setPhoto4}
 								/>
 							</View>
 						</ScrollView>
-
 					</View>
-				)
-				}
-			</SafeAreaView >
-		</KeyboardAvoidingView >
-
+				)}
+			</SafeAreaView>
+		</KeyboardAvoidingView>
 	);
 }
 
@@ -242,7 +289,7 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		alignItems: 'center',
 		paddingTop: 20,
-		bottom: 10
+		bottom: 10,
 	},
 	headerContainer: {
 		flexDirection: 'row',
@@ -277,7 +324,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingTop: 10,
-		bottom: 10
+		bottom: 10,
 	},
 	iconClose: {
 		paddingBottom: 10,

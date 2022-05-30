@@ -5,15 +5,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './screens/LoginScreen';
 import NewMarker from './components/NewMarker';
 import { Constants } from 'expo-camera';
-import 'react-native-gesture-handler'
+import 'react-native-gesture-handler';
 import Details from './components/Details';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
-import NewAccount from './components/NewAccount'
+import NewAccount from './components/NewAccount';
 import { StatusBar } from 'expo-status-bar';
-import { LogBox, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
-
-LogBox.ignoreLogs(['Remote debugger']);
+import RootNavigation from './navigation/RootNavigation';
 
 const heightStatusBar = Constants.StatusBarHeight;
 
@@ -21,8 +20,7 @@ const Stack = createSharedElementStackNavigator();
 
 export default function App() {
 	return (
-
-		<NavigationContainer>
+		/*<NavigationContainer>
 			<MenuProvider>
 				<StatusBar animated={true} backgroundColor="gray" hidden={false} />
 				<SafeAreaView style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : 37 }}>
@@ -63,7 +61,7 @@ export default function App() {
 					</Stack.Navigator>
 				</SafeAreaView>
 			</MenuProvider>
-		</NavigationContainer>
-
+		</NavigationContainer>*/
+		<RootNavigation />
 	);
 }

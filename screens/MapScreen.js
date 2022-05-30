@@ -8,7 +8,7 @@ import * as Location from 'expo-location';
 const Width = Dimensions.get('screen').width;
 const Height = Dimensions.get('screen').height;
 
-const MapScreen = () => {
+export const MapScreen = () => {
 	const [location, setLocation] = useState(null);
 	const [errorMsg, setErrorMsg] = useState(null);
 
@@ -77,5 +77,3 @@ const MapScreen = () => {
 		</>
 	);
 };
-
-export default MapScreen;

@@ -15,21 +15,21 @@ import FormLogin from '../components/FormLogin';
 import SvgImage from '../components/SvgImage';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import * as Animatable from 'react-native-animatable'
+import * as Animatable from 'react-native-animatable';
 
 const { width, height } = Dimensions.get('screen');
 
-const LoginScreen = () => {
+export const LoginScreen = () => {
 	const [viewHeight] = useState(new Animated.ValueXY({ x: 0, y: 50 }));
 	const [opacityView] = useState(new Animated.Value(0));
 	const [logo] = useState(new Animated.ValueXY({ x: 170, y: 150 }));
 
-	const navigation = useNavigation()
+	const navigation = useNavigation();
 
 	const letterAnimation = {
-		0: { opacity: 0, translateY: -42, },
-		1: { opacity: 1, translateY: 0, }
-	}
+		0: { opacity: 0, translateY: -42 },
+		1: { opacity: 1, translateY: 0 },
+	};
 
 	useEffect(() => {
 		const keyboardDidShowListener = Keyboard.addListener(
@@ -125,8 +125,7 @@ const LoginScreen = () => {
 							},
 						]}
 					>
-						<View
-							style={[styles.title, { flexDirection: 'row' }]}>
+						<View style={[styles.title, { flexDirection: 'row' }]}>
 							{'Bienvenido'.split('').map((letter, index) => {
 								return (
 									<Animatable.Text
@@ -137,9 +136,9 @@ const LoginScreen = () => {
 										style={styles.heading}
 									>
 										{letter}
-									</Animatable.Text>)
-							}
-							)}
+									</Animatable.Text>
+								);
+							})}
 						</View>
 						<Text style={styles.subTitle}>
 							Ingresa con tu cuenta
@@ -156,7 +155,7 @@ const LoginScreen = () => {
 							}}
 						>
 							<View style={{ paddingRight: 20 }}>
-								<TouchableOpacity onPress={() => { }}>
+								<TouchableOpacity onPress={() => {}}>
 									<Text
 										style={{
 											color: 'black',
@@ -174,7 +173,9 @@ const LoginScreen = () => {
 										flexDirection: 'row',
 										paddingRight: 10,
 									}}
-									onPress={() => { navigation.navigate('NewAccount') }}
+									onPress={() => {
+										navigation.navigate('NewAccount');
+									}}
 								>
 									<Text
 										style={{
@@ -201,8 +202,6 @@ const LoginScreen = () => {
 		</KeyboardAvoidingView>
 	);
 };
-
-export default LoginScreen;
 
 const styles = StyleSheet.create({
 	mainContainer: {
@@ -232,7 +231,7 @@ const styles = StyleSheet.create({
 	subTitle: {
 		fontSize: 20,
 		color: 'gray',
-		paddingBottom: 20
+		paddingBottom: 20,
 	},
 	containerSVG: {
 		height: height / 1.78,
@@ -246,5 +245,5 @@ const styles = StyleSheet.create({
 		textTransform: 'uppercase',
 		fontWeight: '800',
 		letterSpacing: 2,
-	}
+	},
 });
