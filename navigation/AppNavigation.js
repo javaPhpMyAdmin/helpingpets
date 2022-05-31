@@ -17,35 +17,35 @@ const TabArr = [
 		route: 'HomeScreen',
 		label: 'Inicio',
 		type: 'font-awesome',
-		icon: 'house',
+		icon: 'plus-circle',
 		component: HomeScreen,
 	},
 	{
-		route: 'Search',
+		route: 'LoginScreen',
 		label: 'Search',
 		type: 'font-awesome',
-		icon: 'plus',
+		icon: 'plus-circle',
 		component: LoginScreen,
 	},
 	{
 		route: 'NewMarker',
 		label: 'Agregar',
 		type: 'font-awesome',
-		icon: 'plus',
+		icon: 'plus-circle',
 		component: NewMarker,
 	},
 	{
 		route: 'MapScreen',
 		label: 'Mapa',
 		type: 'font-awesome',
-		icon: 'heart',
+		icon: 'plus-circle',
 		component: MapScreen,
 	},
 	{
 		route: 'AccountScreen',
 		label: 'Perfil',
 		type: 'font-awesome',
-		icon: 'circle-user',
+		icon: 'plus-circle',
 		component: AccountScreen,
 	},
 ];
@@ -86,7 +86,7 @@ const TabButton = (props) => {
 		} else {
 			viewRef.current.animate(animate2);
 			circleRef.current.animate(circle2);
-			textRef.current.transitionTo({ scale: 0 });
+			textRef.current.transitionTo({ scale: .7 });
 		}
 	}, [focused]);
 
@@ -104,7 +104,7 @@ const TabButton = (props) => {
 				<View style={styles.btn}>
 					<Animatable.View ref={circleRef} style={styles.circle} />
 					<Icon
-						type={item.type}
+						type='font-awesome'
 						name={item.icon}
 						color={focused ? Colors.white : Colors.primary}
 						size={22}
@@ -131,7 +131,7 @@ export default function AppNavigation() {
 					<Tab.Screen
 						key={index}
 						name={item.route}
-						component={item.route}
+						component={item.component}
 						options={{
 							tabBarShowLabel: false,
 							tabBarButton: (props) => (
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+		bottom: 2
 	},
 	tabBar: {
 		height: 70,
@@ -177,8 +178,10 @@ const styles = StyleSheet.create({
 		borderRadius: 25,
 	},
 	text: {
-		fontSize: 10,
+		fontSize: 17,
+		fontWeight: 'bold',
 		textAlign: 'center',
 		color: Colors.primary,
+		bottom: 5
 	},
 });
