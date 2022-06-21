@@ -19,6 +19,7 @@ const heightStatusBar = Constants.StatusBarHeight;
 const Stack = createSharedElementStackNavigator();
 
 export default function App() {
+	
 	return (
 		/*<NavigationContainer>
 			<MenuProvider>

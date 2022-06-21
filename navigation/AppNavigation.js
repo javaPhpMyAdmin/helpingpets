@@ -125,8 +125,7 @@ export default function AppNavigation() {
 				headerShown: false,
 				tabBarStyle: styles.tabBar,
 			}}
-		>
-			{TabArr.map((item, index) => {
+		>{TabArr.map((item, index) => {
 				return (
 					<Tab.Screen
 						key={index}
