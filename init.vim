@@ -121,7 +121,7 @@ nnoremap <C-A> :Commentary<CR>
 vnoremap <space>/ :Commentary<CR>
 
 " NUEVA TERMINAL SHIF + t
-map <S-t> :vert :term<CR
+map <S-t> :vert :term<CR>
 set splitright
 
 " Configuracion de airline
@@ -131,8 +131,8 @@ let g:airline_powerline_fonts = 1
 
 " NERDTREE Configuracion
 let NERDTreeQuitOnOpen=1
-nnoremap <silent> 1 :NERDTreeFind<CR>
-nnoremap <silent> 2 :NERDTreeToggle<CR>	
+nnoremap <C-z>   :NERDTreeFind<CR>
+nnoremap <C-z> :NERDTreeToggle<CR>	
 
 nnoremap <space>> 10<C-w>>
 nnoremap <space>< 10<C-w><
