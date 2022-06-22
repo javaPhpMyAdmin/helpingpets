@@ -9,16 +9,20 @@ set relativenumber
 set cursorline
 set sw=2
 
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/config/nvim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/AppData/Local/nvim/'
+if empty(glob('~/AppData/Local/nvim-data/site/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('~/AppData/Local/nvim/plugged')
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Abre y cierra llaves y parentesis
 Plug 'chun-yang/auto-pairs',
+Plug 'jiangmiao/auto-pairs'
 
 " TEMAS GRUVBOX
 Plug 'sainnhe/gruvbox-material'
@@ -26,6 +30,9 @@ Plug 'sainnhe/gruvbox-material'
 "Plug 'nvim-lua/completion-nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 
+Plug 'christoomey/vim-tmux-navigator'
+
+Plug 'Yggdroot/indentLine'
 
 " Plugions para javascript
 Plug 'pangloss/vim-javascript'
@@ -33,8 +40,8 @@ Plug 'maxmellon/vim-jsx-pretty'
 
 
 " Snippets para javascript
-Plug 'sirver/ultisnips'
-Plug 'mlaursen/vim-react-snippets'
+"Plug 'sirver/ultisnips'
+"Plug 'mlaursen/vim-react-snippets'
 
 " EMMET
 Plug 'mattn/emmet-vim'
@@ -59,6 +66,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'alvan/vim-closetag'
 Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
 
+Plug 'kdheepak/lazygit.nvim'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -67,9 +75,13 @@ Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 
 
-let g:coc_global_extensions = ['coc-json','coc-tsserver','coc-emmet','coc-tslint','coc-git','coc-css','coc-prettier','coc-eslint','coc-snippets','coc-pairs']
+let g:coc_global_extensions = ['coc-json','coc-tsserver','coc-emmet','coc-tslint','coc-git','coc-css','coc-prettier','coc-eslint','coc-pairs']
 
 call plug#end()
+
+
+nnoremap <space>ff <cmd>Telescope find_files<cr>
+nnoremap <space>fg <cmd>Telescope live_grep<cr>
 
 
 " GRUVBOX configuracion
@@ -83,16 +95,22 @@ colorscheme gruvbox-material
 "require'lspconfig'.tsserver.setup{on_attach=require'completion'.on_attach}
 "EOF
 
-let g:python_host_prog = 'user/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3.10'
+
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
+let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_floating_window_use_plenary = 0 " use plenary.nvim to manage floating window if available
+let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
+
+
+"let g:python_host_prog = '~/AppData/Local/Programs/Python/'
+let g:python3_host_prog = '~/AppData/Local/Programs/Python/Python310/Lib/site-packages/pyx'
 
 let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsExpandTrigger = "<tab>"
 
-let g:UltiSnipsSnippetsDir = "~/.config/nvim/plugged/ultisnips"
-
-
-" EMMET configuracion
+"let g:UltiSnipsSnippetsDir = "~/AppData/Local/nvim/plugged/ultisnips
+"EMMET configuracion
 let g:user_emmet_mode='n'
 let g:user_emmet_leader_key=','
 let g:user_emmet_settings={
@@ -106,17 +124,11 @@ let g:user_emmet_settings={
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 nnoremap <C-D> :Prettier<CR>
 " COC Configuracion
-
-nnoremap <space>f :Files<CR>
-map <space>e :Ag<CR>
-
-" Salir modo ESC
-imap jj <Esc>
-
-
-
-
-" Configuracion de COMENTARIOS
+nnoremap <space>f :Files<CR> 
+map <space>e :Ag<CR> 
+" Salir modo ESC 
+imap jj <Esc> 
+"CoJJnfiguracion de COMENTARIOS
 nnoremap <C-A> :Commentary<CR>
 vnoremap <space>/ :Commentary<CR>
 
@@ -133,6 +145,8 @@ let g:airline_powerline_fonts = 1
 let NERDTreeQuitOnOpen=1
 nnoremap <C-z>   :NERDTreeFind<CR>
 nnoremap <C-z> :NERDTreeToggle<CR>	
+
+nnoremap <C-g> :LazyGit<CR>
 
 nnoremap <space>> 10<C-w>>
 nnoremap <space>< 10<C-w><
@@ -307,5 +321,3 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-
